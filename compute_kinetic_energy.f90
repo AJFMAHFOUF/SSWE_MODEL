@@ -4,15 +4,13 @@ subroutine compute_kinetic_energy
  use model_vars
  use spectral_vars
  implicit none
- integer :: i1, j1, i2, js , ms, j_index2
+ integer :: j1
  
 ! Physical space 
  
  do j1 = 1,nlat
-   do i1  = 1,nlon
-     ke(i1,j1) = 0.5*(u(i1,j1)*u(i1,j1) + v(i1,j1)*v(i1,j1))/(a*a*(1.0 - x(j1)*x(j1)))
-   enddo
- enddo    
+   ke(:,j1) = 0.5*(u(:,j1)*u(:,j1) + v(:,j1)*v(:,j1))/(a*a*(1.0 - x(j1)*x(j1)))
+ enddo   
  
 ! Spectral space
 

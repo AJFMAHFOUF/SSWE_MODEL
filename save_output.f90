@@ -3,14 +3,16 @@ subroutine save_output(nstep)
  use params
  use model_vars
  use spectral_vars
+ 
  implicit none
+ 
  integer, intent(in) :: nstep
  character(len=1)    :: ichst1
  character(len=2)    :: ichst2
  character(len=3)    :: ichst
  character(len=2)    :: tt
  integer :: i1, j1, i2, ms, js, j_index2, ihour
- real :: zlon, zlat, zu, zv, zphi  
+ real :: zlon, zlat, zu, zv, zphi, zfac  
   
  ihour = nstep*dt/3600.0
  
@@ -77,21 +79,23 @@ subroutine save_output(nstep)
  open (unit=20,file='../DATA/SSWE_model_T'//tt//'_step_'//ichst//'_expid_'//expid//'.dat',status='unknown')
   
  do j1=1,nlat 
+   zfac = 1.0/(a*sqrt(1.0 - x(j1)*x(j1)))
    do i1=1,nlon
      zlon = float(i1-1)/float(nlon)*360.0
      zlat = asin(x(j1))*180.0/pi
-     zu = u(i1,j1)/(a*sqrt(1.0 - x(j1)*x(j1))) ! real U wind
-     zv = v(i1,j1)/(a*sqrt(1.0 - x(j1)*x(j1))) ! real V wind
-     zphi = phi(i1,j1) !+ phi_bar               ! actual geopotential = mean + perturbation
+     zu = u(i1,j1)*zfac   ! real U wind
+     zv = v(i1,j1)*zfac   ! real V wind
+     zphi = phi(i1,j1) 
      write(20,*) zlon,zlat,vor(i1,j1),div(i1,j1),zphi,zu,zv,psi(i1,j1),khi(i1,j1)
    enddo
-   zu = u(1,j1)/(a*sqrt(1.0 - x(j1)*x(j1)))
-   zv = v(1,j1)/(a*sqrt(1.0 - x(j1)*x(j1)))
-   zphi = phi(1,j1) !+ phi_bar
+   zu = u(1,j1)*zfac
+   zv = v(1,j1)*zfac
+   zphi = phi(1,j1) 
    write(20,*) 360.0,zlat,vor(1,j1),div(1,j1),zphi,zu,zv,psi(1,j1),khi(1,j1)
  enddo  
   
  close (unit=20)  
   
  return  
+ 
 end subroutine save_output

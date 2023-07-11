@@ -58,7 +58,6 @@ subroutine init
    enddo
  enddo
  phi_bar = phi_bar/zweight
- !phi(:,:) = phi(:,:) - phi_bar
  
  print *,'Initial fields have been read from input files for vor, div, phi, u and v',phi_bar
  

@@ -58,8 +58,8 @@ subroutine convert_vordiv2uv(nstep)
    do i2 = ms,mm
      js = j_index2(mm,ms,i2)
      if (i2 > 0) then 
-       psi_mn(js) = (-a*a/(i2*(i2+1.0)))*vor_mn(js,2)
-       khi_mn(js) = (-a*a/(i2*(i2+1.0)))*div_mn(js,2)   
+       psi_mn(js) = -a*a/(i2*(i2+1.0))*vor_mn(js,2)
+       khi_mn(js) = -a*a/(i2*(i2+1.0))*div_mn(js,2)   
      endif  
    enddo
  enddo      

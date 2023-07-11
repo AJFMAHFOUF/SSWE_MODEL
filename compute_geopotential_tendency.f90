@@ -17,15 +17,14 @@ subroutine compute_geopotential_tendency(nstep,tend_phi_mn)
  
  do j1 = 1,nlat
    do i1  = 1,nlon
-     uphi(i1,j1) = u(i1,j1)*(phi(i1,j1))
-     vphi(i1,j1) = v(i1,j1)*(phi(i1,j1))
+     uphi(i1,j1) = u(i1,j1)*phi(i1,j1)
+     vphi(i1,j1) = v(i1,j1)*phi(i1,j1)
    enddo
  enddo  
  
 ! Fourier space for non linear terms
 
  call fft_d(uphi,uphi_m) 
- 
  call fft_d(vphi,vphi_m) 
 
 ! Compute tendencies in spectral space

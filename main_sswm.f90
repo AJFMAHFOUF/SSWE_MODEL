@@ -20,11 +20,10 @@ program main_sswm
  
  complex, dimension(mmax) :: tend_vor_mn, tend_div_mn, tend_phi_mn, filter
  integer :: nstep, i1, i2, ms, js, j_index2
- real :: t0, t1, t2, t3, zlap
+ real    :: t1, t2, zlap
 
 ! Required initialisations and read fields in physical space
 
- call cpu_time(time=t0)
  call init
 
  if (lreaduv) call convert_uv2vordiv
@@ -32,7 +31,7 @@ program main_sswm
 ! Time integration  
  
  call cpu_time(time=t1)
- do nstep = 0,12*4
+ do nstep = 0,npdt
  
    call convert_vordiv2uv(nstep)
  
@@ -92,22 +91,19 @@ program main_sswm
      phi_mn(:,2) = phi_mn(:,1) + dt*tend_phi_mn(:)   
    endif     
   
-   !if (nstep == 1) call compute_ke_spectrum(nstep)
+! Write fields in physical space - spectral transforms in the subroutine
    
-   if (mod(nstep,4) == 0) call save_output(nstep)
+   if (mod(nstep,nfreq) == 0) then
+     call save_output(nstep)
+     call compute_ke_spectrum(nstep)
+   endif  
    
  enddo  
- 
-! Write fields in physical space - spectral transforms in the subroutine
 
- nstep = nstep - 1
  call cpu_time(time=t2)
- call compute_ke_spectrum(nstep)
- !call save_output(nstep) 
- call cpu_time(time=t3)
  
- print *,'temps execution modele =',t2-t1
- print *,'temps total avec initialisation et ecriture resultats =',t3-t0
+ print *,'Model execution CPU time =',t2-t1
  
+ stop
 
 end program main_sswm
