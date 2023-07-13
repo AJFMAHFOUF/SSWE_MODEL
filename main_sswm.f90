@@ -61,6 +61,12 @@ program main_sswm
      endif
      
      vor_mn(:,3) = vor_mn(:,1) + 2.0*dt*tend_vor_mn(:)
+     
+! Apply horizontal diffusion in spectral space
+
+     call numerical_diffusion(vor_mn(:,3),1)
+     call numerical_diffusion(div_mn(:,3),1)
+     call numerical_diffusion(phi_mn(:,3),0)     
  
 ! Apply Robert Asselin Williams filter to remove 2*dt noise
      

@@ -12,12 +12,13 @@ module params
  real, parameter    :: a = 6371.0E3           ! Earth radius
  real, parameter    :: pi = acos(-1.0)        ! Pi constant
  real, parameter    :: omega = 2.0*pi/86400.0 ! Earth angular speed
- real, parameter    :: dt = 900.0             ! model time step
- integer, parameter :: nhtot = 24             ! number of hours of model integration
- integer, parameter :: npdt = nhtot*3600/dt   ! number of model time steps
- integer, parameter :: nfreq = 3600/dt        ! hourly output archiving frequency
  real, parameter    :: nu = 0.02, wk = 0.53   ! tunable parameters for 2*dt filter 
- character(len=3)   :: expid='002'            ! experiment identifier
+ real, parameter    :: kdiff = 1.0E17         ! Coefficient for horizontal diffusion
+ real, parameter    :: dt = 1800.0            ! model time step
+ integer, parameter :: nhtot = 48             ! number of hours of model integration
+ integer, parameter :: npdt = nhtot*3600/dt   ! number of model time steps
+ integer, parameter :: nfreq = 7200/dt        ! hourly output archiving frequency
+ character(len=3)   :: expid='003'            ! experiment identifier
  logical            :: lreaduv=.true.         ! logical to use u v at initial time
  logical            :: lsemimp=.true.         ! semi-implicit scheme
 
