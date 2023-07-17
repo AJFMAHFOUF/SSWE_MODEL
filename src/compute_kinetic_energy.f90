@@ -3,7 +3,9 @@ subroutine compute_kinetic_energy
  use params
  use model_vars
  use spectral_vars
+ 
  implicit none
+ 
  integer :: j1
  
 ! Physical space 
