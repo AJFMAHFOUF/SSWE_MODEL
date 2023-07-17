@@ -15,7 +15,7 @@ module params
  real, parameter    :: dt = 900.0             ! model time step
  integer, parameter :: nhtot = 24             ! number of hours of model integration
  integer, parameter :: npdt = nhtot*3600/dt   ! number of model time steps
- integer, parameter :: nfreq = 3600/dt        ! hourly output archiving frequency
+ integer, parameter :: nfreq = 6*3600/dt      ! output archiving frequency
  real, parameter    :: nu = 0.02, wk = 0.53   ! tunable parameters for 2*dt filter 
  character(len=3)   :: expid='002'            ! experiment identifier
  logical            :: lreaduv=.true.         ! logical to use u v at initial time

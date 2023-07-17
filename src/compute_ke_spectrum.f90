@@ -50,7 +50,7 @@ subroutine compute_ke_spectrum(nstep)
  
 ! Store results in file 
  
- open (unit=25,file='../DATA/SSWE_model_spectrum_T'//tt//'_step_'//ichst//'_expid_'//expid//'.dat',status='unknown')
+ open (unit=25,file='../data_out/SSWE_model_spectrum_T'//tt//'_step_'//ichst//'_expid_'//expid//'.dat',status='unknown')
  
  do i1=1,mm
    write(25,*) i1,ke_spectrum(i1)
