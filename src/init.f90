@@ -31,11 +31,11 @@ subroutine init
 
 ! Read initial physical fields (vorticity, divergence, geopotential, u and v winds)  
      
- open (unit=10,file='../DATA/VOR_15012023_00_T'//tt//'gg.dat',status='old')
- open (unit=11,file='../DATA/DIV_15012023_00_T'//tt//'gg.dat',status='old') 
- open (unit=12,file='../DATA/PHI_15012023_00_T'//tt//'gg.dat',status='old')  
- open (unit=13,file='../DATA/U_15012023_00_T'//tt//'gg.dat',status='old')
- open (unit=14,file='../DATA/V_15012023_00_T'//tt//'gg.dat',status='old') 
+ open (unit=10,file='../data_in/VOR_15012023_00_T'//tt//'gg.dat',status='old')
+ open (unit=11,file='../data_in/DIV_15012023_00_T'//tt//'gg.dat',status='old') 
+ open (unit=12,file='../data_in/PHI_15012023_00_T'//tt//'gg.dat',status='old')  
+ open (unit=13,file='../data_in/U_15012023_00_T'//tt//'gg.dat',status='old')
+ open (unit=14,file='../data_in/V_15012023_00_T'//tt//'gg.dat',status='old') 
 
  phi_bar = 0.0
  zweight = 0.0
@@ -69,7 +69,7 @@ subroutine init
 
 ! Read Gaussian latitudes (sin) a and Gaussian weights w 
  
- open (20,file='../DATA/gaulat_legpol_T'//tt//'a.dat',status='old')
+ open (20,file='../data_in/gaulat_legpol_T'//tt//'a.dat',status='old')
  
  read(20,*) (x(j1),j1=1,nlat)
  read(20,*) (w(j1),j1=1,nlat)

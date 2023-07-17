@@ -76,7 +76,7 @@ subroutine save_output(nstep)
  
 ! Write results in ASCII file for plotting purposes
   
- open (unit=20,file='../DATA/SSWE_model_T'//tt//'_step_'//ichst//'_expid_'//expid//'.dat',status='unknown')
+ open (unit=20,file='../data_out/SSWE_model_T'//tt//'_step_'//ichst//'_expid_'//expid//'.dat',status='unknown')
   
  do j1=1,nlat 
    zfac = 1.0/(a*sqrt(1.0 - x(j1)*x(j1)))
