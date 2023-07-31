@@ -1,6 +1,6 @@
 SOURCE	= fft99_modified.f90 parameters.f90 compute_divergence_tendency.f90 compute_vorticity_tendency.f90  init.f90 \
 legt_i.f90 save_output.f90 compute_geopotential_tendency.f90 convert_vordiv2uv.f90 convert_uv2vordiv.f90 fft_d.f90 \
-j_index2.f90 main_sswm.f90 compute_kinetic_energy.f90 compute_ke_spectrum.f90 d_legpol.f90 fft_i.f90 legt_d.f90 
+j_index2.f90 main_sswm.f90 compute_kinetic_energy.f90 compute_ke_spectrum.f90 d_legpol.f90 fft_i.f90 legt_d.f90 numerical_diffusion.f90
 
 FC = gfortran
 FFLAGS = -fdefault-real-8	
