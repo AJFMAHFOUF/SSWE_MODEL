@@ -9,7 +9,8 @@ subroutine save_output(nstep)
  integer, intent(in) :: nstep
  character(len=1)    :: ichst1
  character(len=2)    :: ichst2
- character(len=3)    :: ichst
+ character(len=3)    :: ichst3
+ character(len=4)    :: ichst
  character(len=2)    :: tt
  integer :: i1, j1, i2, ms, js, j_index2, ihour
  real :: zlon, zlat, zu, zv, zphi, zfac  
@@ -18,12 +19,15 @@ subroutine save_output(nstep)
  
  if (ihour < 10) then 
    write(ichst1,'(i1)') ihour
-   ichst = '00'//ichst1
+   ichst = '000'//ichst1
  elseif (ihour < 100) then
    write(ichst2,'(i2)') ihour
-   ichst = '0'//ichst2
+   ichst = '00'//ichst2
+ elseif (ihour < 1000) then
+   write(ichst3,'(i3)') ihour
+   ichst = '0'//ichst3   
  else
-   write(ichst,'(i3)') ihour
+   write(ichst,'(i4)') ihour
  endif      
     
  write(tt,'(i2)') mm 
