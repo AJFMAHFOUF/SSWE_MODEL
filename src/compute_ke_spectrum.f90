@@ -12,7 +12,7 @@ subroutine compute_ke_spectrum(nstep)
  character(len=2)      :: ichst2
  character(len=3)      :: ichst3
  character(len=4)      :: ichst
- character(len=2)      :: tt
+ character(len=3)      :: tt
  real, dimension(0:mm) :: ke_spectrum, zcoef
  
  ihour = nstep*dt/3600.0
@@ -30,7 +30,7 @@ subroutine compute_ke_spectrum(nstep)
    write(ichst,'(i4)') ihour
  endif      
  
- write(tt,'(i2)') mm 
+ write(tt,'(i3)') mm 
    
 ! Compute kinetic energy spectrum (formulation from Lambert, 1984)   
  

@@ -11,7 +11,7 @@ subroutine save_output(nstep)
  character(len=2)    :: ichst2
  character(len=3)    :: ichst3
  character(len=4)    :: ichst
- character(len=2)    :: tt
+ character(len=3)    :: tt
  integer :: i1, j1, i2, ms, js, j_index2, ihour
  real :: zlon, zlat, zu, zv, zphi, zfac  
   
@@ -30,7 +30,7 @@ subroutine save_output(nstep)
    write(ichst,'(i4)') ihour
  endif      
     
- write(tt,'(i2)') mm 
+ write(tt,'(i3)') mm 
   
 ! Back to physical space - vorticity
 

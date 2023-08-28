@@ -10,11 +10,11 @@ subroutine init
  integer            :: i1, i2, j1
  real               :: zlon, zlat, zweight
  real, dimension(5) :: zfield
- character(len=2)   :: tt
+ character(len=3)   :: tt
  
 ! Define character for truncation
 
- write(tt,'(i2)') mm
+ write(tt,'(i3)') mm
  
 ! Initialisation prior FFT
 
@@ -91,6 +91,6 @@ subroutine init
  enddo
  
  print *,'Exit from initialisation subroutine'      
-       
- return
+      
+ return     
 end subroutine init
