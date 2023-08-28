@@ -18,7 +18,7 @@ program main_sswm
  
  implicit none
  
- complex, dimension(mmax) :: tend_vor_mn, tend_div_mn, tend_phi_mn, filter, phi_diff
+ complex, dimension(mmax) :: tend_vor_mn, tend_div_mn, tend_phi_mn, tend_qv_mn, filter, phi_diff
  integer :: nstep, i1, i2, ms, js, j_index2
  real    :: t1, t2, zlap
 
@@ -40,6 +40,8 @@ program main_sswm
    call compute_vorticity_tendency(tend_vor_mn)
    call compute_divergence_tendency(nstep,tend_div_mn)
    call compute_geopotential_tendency(nstep,tend_phi_mn)
+   call compute_tracer_tendency(tend_qv_mn)
+   !tend_qv_mn(:) = (0.,0.)
    
    if (nstep > 0) then
    
@@ -61,11 +63,13 @@ program main_sswm
      endif
      
      vor_mn(:,3) = vor_mn(:,1) + 2.0*dt*tend_vor_mn(:)
+     qv_mn(:,3) = qv_mn(:,1) + 2.0*dt*tend_qv_mn(:)
      
 ! Apply horizontal diffusion in spectral space
 
      call numerical_diffusion(vor_mn(:,3),1)
      call numerical_diffusion(div_mn(:,3),1)
+     call numerical_diffusion(qv_mn(:,3),0)
 
 ! Include orography for geopotential filtering
 
@@ -86,6 +90,11 @@ program main_sswm
      filter(:) = phi_mn(:,1) - 2.0*phi_mn(:,2) + phi_mn(:,3)
      phi_mn(:,2) = phi_mn(:,2) + nu*wk*filter(:)
      phi_mn(:,3) = phi_mn(:,3) - nu*(1.0-wk)*filter(:)
+     
+     filter(:) = qv_mn(:,1) - 2.0*qv_mn(:,2) + qv_mn(:,3)
+     qv_mn(:,2) = qv_mn(:,2) + nu*wk*filter(:)
+     qv_mn(:,3) = qv_mn(:,3) - nu*(1.0-wk)*filter(:)
+  
   
 ! Swap time steps    
    
@@ -95,11 +104,14 @@ program main_sswm
      div_mn(:,2) = div_mn(:,3)
      phi_mn(:,1) = phi_mn(:,2)
      phi_mn(:,2) = phi_mn(:,3)
+     qv_mn(:,1)  = qv_mn(:,2)
+     qv_mn(:,2)  = qv_mn(:,3)
         
    else
      vor_mn(:,2) = vor_mn(:,1) + dt*tend_vor_mn(:)
      div_mn(:,2) = div_mn(:,1) + dt*tend_div_mn(:)
      phi_mn(:,2) = phi_mn(:,1) + dt*tend_phi_mn(:)   
+     qv_mn(:,2) = qv_mn(:,1) + dt*tend_qv_mn(:)   
    endif     
   
 ! Write fields in physical space - spectral transforms in the subroutine

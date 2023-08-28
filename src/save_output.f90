@@ -45,7 +45,12 @@ subroutine save_output(nstep)
 ! Back to physical space - geopotential
   
  call legt_i(phi_m,phi_mn(:,2),0)
- call fft_i(phi,phi_m)     
+ call fft_i(phi,phi_m)   
+ 
+! Back to physical space - passive tracer
+  
+ call legt_i(qv_m,qv_mn(:,2),0)
+ call fft_i(qv,qv_m)     
   
 ! Back to physical space - wind components
 
@@ -90,12 +95,12 @@ subroutine save_output(nstep)
      zu = u(i1,j1)*zfac   ! real U wind
      zv = v(i1,j1)*zfac   ! real V wind
      zphi = phi(i1,j1) + phis(i1,j1)
-     write(20,*) zlon,zlat,vor(i1,j1),div(i1,j1),zphi,zu,zv,psi(i1,j1),khi(i1,j1)
+     write(20,*) zlon,zlat,vor(i1,j1),div(i1,j1),zphi,zu,zv,psi(i1,j1),khi(i1,j1),qv(i1,j1)
    enddo
    zu = u(1,j1)*zfac
    zv = v(1,j1)*zfac
    zphi = phi(1,j1) 
-   write(20,*) 360.0,zlat,vor(1,j1),div(1,j1),zphi,zu,zv,psi(1,j1),khi(1,j1)
+   write(20,*) 360.0,zlat,vor(1,j1),div(1,j1),zphi,zu,zv,psi(1,j1),khi(1,j1),qv(1,j1)
  enddo  
   
  close (unit=20)  

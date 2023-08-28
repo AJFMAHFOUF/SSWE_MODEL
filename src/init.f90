@@ -56,6 +56,7 @@ subroutine init
        phi(i1,j1) = phi(i1,j1) - phis(i1,j1) 
        utr(i1,j1) = zfield(4)
        vtr(i1,j1) = zfield(5) 
+       qv(i1,j1) = (cos(zlat*pi/180.))**4
      endif
    enddo
  enddo
@@ -106,11 +107,16 @@ subroutine init
  
  call fft_d(div,div_m) 
  call legt_d(div_m,div_mn(:,2))
-                                                                                                                                        
+                                                                                                                                
 ! Spectral coefficients for geopotential
  
  call fft_d(phi,phi_m) 
  call legt_d(phi_m,phi_mn(:,2))
+ 
+! Spectral coefficients for tracer
+ 
+ call fft_d(qv,qv_m) 
+ call legt_d(qv_m,qv_mn(:,2)) 
    
 ! Fill other arrays
    
@@ -120,6 +126,8 @@ subroutine init
  div_mn(:,3) = div_mn(:,2)
  phi_mn(:,1) = phi_mn(:,2)
  phi_mn(:,3) = phi_mn(:,2)
+ qv_mn(:,1)  = qv_mn(:,2)
+ qv_mn(:,3)  = qv_mn(:,2)
  
  print *,'Exit from initialisation subroutine'      
       

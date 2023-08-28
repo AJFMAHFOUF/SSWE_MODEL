@@ -32,17 +32,17 @@ module model_vars
  
  implicit none
  
- real, dimension (nlon,nlat) :: vor, div, phi      ! prognostic variables in physical space
+ real, dimension (nlon,nlat) :: vor, div, phi, qv  ! prognostic variables in physical space
  real, dimension (nlon,nlat) :: psi, khi, u, v, ke ! diagnostic variables in physical space
  real, dimension (nlon,nlat) :: utr, vtr           ! u and v winds in geographical coordinates
  real, dimension (nlon,nlat) :: phis               ! surface geopotential
  real                        :: phi_bar            ! mean value of geopotential (for SI scheme)
  
- complex, dimension(nlat,-mm:mm) :: vor_m, div_m, phi_m, phis_m
+ complex, dimension(nlat,-mm:mm) :: vor_m, div_m, phi_m, qv_m, phis_m
  complex, dimension(nlat,-mm:mm) :: uvor_m, vvor_m
  complex, dimension(nlat,-mm:mm) :: psi_m, khi_m, u_m, v_m, ke_m  
  
- complex, dimension(mmax,3) :: vor_mn, div_mn, phi_mn  ! prognostic variables in spectral space (3 time steps)
+ complex, dimension(mmax,3) :: vor_mn, div_mn, phi_mn, qv_mn  ! prognostic variables in spectral space (3 time steps)
  complex, dimension(mmax)   :: psi_mn, khi_mn, u_mn, v_mn, ke_mn, phis_mn
  
 end module model_vars
