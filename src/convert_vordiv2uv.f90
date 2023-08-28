@@ -15,6 +15,9 @@ subroutine convert_vordiv2uv
   
  call legt_i(vor_m,vor_mn(:,2),0)
  call fft_i(vor,vor_m)   
+ 
+ call legt_i(qv_m,qv_mn(:,2),0)
+ call fft_i(qv,qv_m)   
      
 ! Stream function and velocity potential (spectral)
 
