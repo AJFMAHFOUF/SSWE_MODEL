@@ -8,10 +8,10 @@ subroutine compute_kinetic_energy
  
  integer :: j1
  
-! Physical space 
+! Physical space - include surface geopotential to kinetic energy (i.e. total energy)
  
  do j1 = 1,nlat
-   ke(:,j1) = 0.5*(u(:,j1)*u(:,j1) + v(:,j1)*v(:,j1))/(a*a*(1.0 - x(j1)*x(j1)))
+   ke(:,j1) = phis(:,j1) + 0.5*(u(:,j1)*u(:,j1) + v(:,j1)*v(:,j1))/(a*a*(1.0 - x(j1)*x(j1)))
  enddo   
  
 ! Spectral space

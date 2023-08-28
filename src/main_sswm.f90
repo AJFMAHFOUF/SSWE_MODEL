@@ -18,7 +18,7 @@ program main_sswm
  
  implicit none
  
- complex, dimension(mmax) :: tend_vor_mn, tend_div_mn, tend_phi_mn, filter
+ complex, dimension(mmax) :: tend_vor_mn, tend_div_mn, tend_phi_mn, filter, phi_diff
  integer :: nstep, i1, i2, ms, js, j_index2
  real    :: t1, t2, zlap
 
@@ -66,7 +66,12 @@ program main_sswm
 
      call numerical_diffusion(vor_mn(:,3),1)
      call numerical_diffusion(div_mn(:,3),1)
-     call numerical_diffusion(phi_mn(:,3),0)     
+
+! Include orography for geopotential filtering
+
+     phi_diff(:) = phi_mn(:,3) + phis_mn(:)
+     call numerical_diffusion(phi_mn(:,3),0)
+     phi_mn(:,3) = phi_diff(:) - phis_mn(:)     
  
 ! Apply Robert Asselin Williams filter to remove 2*dt noise
      

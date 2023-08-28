@@ -51,7 +51,9 @@ subroutine init
      if (i1 /= nlon+1) then
        vor(i1,j1) = zfield(1)
        div(i1,j1) = zfield(2)
-       phi(i1,j1) = zfield(3) 
+       phi(i1,j1) = zfield(3)
+       phis(i1,j1) = 0.0
+       phi(i1,j1) = phi(i1,j1) - phis(i1,j1) 
        utr(i1,j1) = zfield(4)
        vtr(i1,j1) = zfield(5) 
      endif
@@ -89,6 +91,11 @@ subroutine init
    u(:,j1) = utr(:,j1)*a*sqrt(1.0 - x(j1)*x(j1))
    v(:,j1) = vtr(:,j1)*a*sqrt(1.0 - x(j1)*x(j1))
  enddo
+ 
+! Spectral coefficients for orography
+
+ call fft_d(phis,phis_m)
+ call legt_d(phis_m,phis_mn) 
  
 ! Spectral coefficients for vorticity (assumes vorticity field defined)
 
