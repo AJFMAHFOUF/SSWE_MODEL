@@ -90,6 +90,30 @@ subroutine init
    v(:,j1) = vtr(:,j1)*a*sqrt(1.0 - x(j1)*x(j1))
  enddo
  
+! Spectral coefficients for vorticity (assumes vorticity field defined)
+
+ call fft_d(vor,vor_m)    
+ call legt_d(vor_m,vor_mn(:,2))
+
+! Spectral coefficients for divergence (assumes divergence field defined)
+ 
+ call fft_d(div,div_m) 
+ call legt_d(div_m,div_mn(:,2))
+                                                                                                                                        
+! Spectral coefficients for geopotential
+ 
+ call fft_d(phi,phi_m) 
+ call legt_d(phi_m,phi_mn(:,2))
+   
+! Fill other arrays
+   
+ vor_mn(:,1) = vor_mn(:,2)
+ vor_mn(:,3) = vor_mn(:,2)   
+ div_mn(:,1) = div_mn(:,2)
+ div_mn(:,3) = div_mn(:,2)
+ phi_mn(:,1) = phi_mn(:,2)
+ phi_mn(:,3) = phi_mn(:,2)
+ 
  print *,'Exit from initialisation subroutine'      
       
  return     

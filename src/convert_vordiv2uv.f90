@@ -1,4 +1,4 @@
-subroutine convert_vordiv2uv(nstep)
+subroutine convert_vordiv2uv
 
  use params
  use model_vars
@@ -6,49 +6,16 @@ subroutine convert_vordiv2uv(nstep)
  
  implicit none
  
- integer, intent(in) :: nstep
  integer :: i1, i2, ms, js, jsm, jsp, j_index2
- 
- if (nstep == 0) then  
- 
-   if (.not.lreaduv) then 
-
-! Spectral coefficients for vorticity 
-
-     call fft_d(vor,vor_m)    
-     call legt_d(vor_m,vor_mn(:,2))
-
-! Spectral coefficients for divergence
- 
-     call fft_d(div,div_m) 
-     call legt_d(div_m,div_mn(:,2))
-                                                                                                                                      
-   endif 
-   
-! Spectral coefficients for geopotential
- 
-   call fft_d(phi,phi_m) 
-   call legt_d(phi_m,phi_mn(:,2))
-   
-   vor_mn(:,1) = vor_mn(:,2)
-   vor_mn(:,3) = vor_mn(:,2)   
-   div_mn(:,1) = div_mn(:,2)
-   div_mn(:,3) = div_mn(:,2)
-   phi_mn(:,1) = phi_mn(:,2)
-   phi_mn(:,3) = phi_mn(:,2)
-   
- else
    
 ! Physical fields required for non linear terms   
    
-   call legt_i(phi_m,phi_mn(:,2),0)
-   call fft_i(phi,phi_m) 
+ call legt_i(phi_m,phi_mn(:,2),0)
+ call fft_i(phi,phi_m) 
   
-   call legt_i(vor_m,vor_mn(:,2),0)
-   call fft_i(vor,vor_m)   
-   
- endif  
- 
+ call legt_i(vor_m,vor_mn(:,2),0)
+ call fft_i(vor,vor_m)   
+     
 ! Stream function and velocity potential (spectral)
 
  psi_mn(:) = (0.,0.)

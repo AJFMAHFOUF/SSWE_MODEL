@@ -33,7 +33,7 @@ program main_sswm
  call cpu_time(time=t1)
  do nstep = 0,npdt
  
-   call convert_vordiv2uv(nstep)
+   call convert_vordiv2uv
  
    call compute_kinetic_energy
  
