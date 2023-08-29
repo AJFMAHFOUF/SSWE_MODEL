@@ -13,10 +13,18 @@ subroutine save_output(nstep)
  character(len=4)    :: ichst
  character(len=3)    :: tt
  character(len=2)    :: tt1
- integer :: i1, j1, i2, ms, js, j_index2, ihour
+ integer :: i1, j1, i2, ms, js, j_index2, ihour, its
  real :: zlon, zlat, zu, zv, zphi, zfac  
   
  ihour = nstep*dt/3600.0
+ 
+! This index change allows the initial fields to be stored after first time step 
+ 
+ if (nstep == 0) then
+   its = 1
+ else
+   its = 2
+ endif    
  
  if (ihour < 10) then 
    write(ichst1,'(i1)') ihour
@@ -40,22 +48,22 @@ subroutine save_output(nstep)
   
 ! Back to physical space - vorticity
 
- call legt_i(vor_m,vor_mn(:,2),0)
+ call legt_i(vor_m,vor_mn(:,its),0)
  call fft_i(vor,vor_m) 
   
 ! Back to physical space - divergence  
   
- call legt_i(div_m,div_mn(:,2),0)
+ call legt_i(div_m,div_mn(:,its),0)
  call fft_i(div,div_m)  
   
 ! Back to physical space - geopotential
   
- call legt_i(phi_m,phi_mn(:,2),0)
+ call legt_i(phi_m,phi_mn(:,its),0)
  call fft_i(phi,phi_m)   
  
 ! Back to physical space - passive tracer
   
- call legt_i(qv_m,qv_mn(:,2),0)
+ call legt_i(qv_m,qv_mn(:,its),0)
  call fft_i(qv,qv_m)     
   
 ! Back to physical space - wind components
@@ -75,8 +83,8 @@ subroutine save_output(nstep)
    do i2 = ms,mm
      js = j_index2(mm,ms,i2)
      if (i2 > 0) then
-       psi_mn(js) = (-a*a/(i2*(i2+1.0)))*vor_mn(js,2)
-       khi_mn(js) = (-a*a/(i2*(i2+1.0)))*div_mn(js,2)       
+       psi_mn(js) = (-a*a/(i2*(i2+1.0)))*vor_mn(js,its)
+       khi_mn(js) = (-a*a/(i2*(i2+1.0)))*div_mn(js,its)       
      endif  
    enddo
  enddo 
