@@ -108,10 +108,12 @@ program main_sswm
      qv_mn(:,2)  = qv_mn(:,3)
         
    else
+   
      vor_mn(:,2) = vor_mn(:,1) + dt*tend_vor_mn(:)
      div_mn(:,2) = div_mn(:,1) + dt*tend_div_mn(:)
      phi_mn(:,2) = phi_mn(:,1) + dt*tend_phi_mn(:)   
      qv_mn(:,2) = qv_mn(:,1) + dt*tend_qv_mn(:)   
+     
    endif     
   
 ! Write fields in physical space - spectral transforms in the subroutine
