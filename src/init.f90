@@ -11,10 +11,16 @@ subroutine init
  real               :: zlon, zlat, zweight
  real, dimension(5) :: zfield
  character(len=3)   :: tt
+ character(len=2)   :: tt1
  
 ! Define character for truncation
 
- write(tt,'(i3)') mm
+ if (mm < 99) then    
+   write(tt1,'(i2)') mm 
+   tt = '0'//tt1
+ else
+   write(tt,'(i3)') mm
+ endif    
  
 ! Initialisation prior FFT
 
