@@ -33,14 +33,6 @@ subroutine convert_uv2vordiv
  vor_mn(:,2) = 0.5*vor_mn(:,2)
  div_mn(:,2) = 0.5*div_mn(:,2)  
  
-! Back to physical space
-
- call legt_i(vor_m,vor_mn(:,2),0)
- call fft_i(vor,vor_m) 
-  
- call legt_i(div_m,div_mn(:,2),0)
- call fft_i(div,div_m) 
- 
 !  For initial step
 
  vor_mn(:,1) = vor_mn(:,2)
