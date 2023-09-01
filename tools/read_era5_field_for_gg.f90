@@ -15,7 +15,7 @@ program read_era5_for_gg
  character (3) :: trunc
  character (8) :: date
  
- date='21121978'
+ date='15012023'
  
  trunc='042'
 !
