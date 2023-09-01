@@ -18,7 +18,7 @@ module params
  real, parameter    :: dt = 1200.0            ! model time step
  integer, parameter :: nhtot = 120             ! number of hours of model integration
  integer, parameter :: npdt = nhtot*3600/dt   ! number of model time steps
- integer, parameter :: nfreq = 6*3600/dt      ! hourly output archiving frequency
+ integer, parameter :: nfreq = 24*3600/dt     ! hourly output archiving frequency
  character(len=3)   :: expid='t01'            ! experiment identifier
  logical            :: lreaduv=.true.         ! logical to use u v at initial time
  logical            :: lsemimp=.true.         ! semi-implicit scheme
