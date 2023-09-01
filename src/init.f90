@@ -37,11 +37,11 @@ subroutine init
 
 ! Read initial physical fields (vorticity, divergence, geopotential, u and v winds)  
      
- open (unit=10,file='../data_in/VOR_15012023_00_T'//tt//'gg.dat',status='old')
- open (unit=11,file='../data_in/DIV_15012023_00_T'//tt//'gg.dat',status='old') 
- open (unit=12,file='../data_in/PHI_15012023_00_T'//tt//'gg.dat',status='old')  
- open (unit=13,file='../data_in/U_15012023_00_T'//tt//'gg.dat',status='old')
- open (unit=14,file='../data_in/V_15012023_00_T'//tt//'gg.dat',status='old') 
+ open (unit=10,file='../data_in/VOR_21121978_00_T'//tt//'gg.dat',status='old')
+ open (unit=11,file='../data_in/DIV_21121978_00_T'//tt//'gg.dat',status='old') 
+ open (unit=12,file='../data_in/PHI_21121978_00_T'//tt//'gg.dat',status='old')  
+ open (unit=13,file='../data_in/U_21121978_00_T'//tt//'gg.dat',status='old')
+ open (unit=14,file='../data_in/V_21121978_00_T'//tt//'gg.dat',status='old') 
 
  phi_bar = 0.0
  zweight = 0.0
