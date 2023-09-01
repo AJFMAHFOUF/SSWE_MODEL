@@ -1,16 +1,15 @@
 program read_era5_for_gg
  integer, parameter :: nx1=1440, ny1=721 ! regular 0.25°x0.25° lat/lon grid
+ !integer, parameter :: nx2=96,    ny2=48  ! Gaussian grid for T31 triagular truncation
  integer, parameter :: nx2=128,   ny2=64  ! Gaussian grid for T42 triagular truncation
  !integer, parameter :: nx2=192,   ny2=96  ! Gaussian grid for T63 triagular truncation
  !integer, parameter :: nx2=160,   ny2=80  ! Gaussian grid for T53 triagular truncation
- !integer, parameter :: nx2=96,    ny2=48  ! Gaussian grid for T31 triagular truncation
- !integer, parameter :: nx2=320,   ny2=160  ! Gaussian grid for T106 triagular truncation
+ !integer, parameter :: nx2=320,   ny2=160 ! Gaussian grid for T106 triagular truncation
  real*8, dimension(ny2) :: xg, wg
  real, dimension(nx1,ny1,5) :: field1
  real, dimension(nx2,ny2,5) :: field2
  real, dimension(nx2,ny2)   :: lat1, lon1
  real :: lat_0, lon_0, dlat, dlon, pi, zdummy
- real :: x1, x2, delta
  integer :: i, j, ii, jj, k, kk
  character (3) :: trunc
  character (8) :: date
@@ -62,13 +61,6 @@ program read_era5_for_gg
 ! Find the gaussian latitudes and associated weights
 !
  call gauleg(-1.0D0,1.0D0,xg,wg,ny2)
-!
-! Parameters for a regular grid along a longitude circle
-! Gaussian grid being close to a regular grid (for plotting purposes)
-! 
- x1 = asin(real(xg(1)))*180.0/pi
- x2 = asin(real(xg(ny2)))*180.0/pi
- delta = (x2 - x1)/float(ny2-1) 
 !
 ! Find the closest point for the target grid
 ! 
