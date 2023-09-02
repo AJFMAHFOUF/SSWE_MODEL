@@ -4,9 +4,9 @@ j_index2.f90 main_sswm.f90 compute_kinetic_energy.f90 compute_ke_spectrum.f90 d_
 compute_tracer_tendency.f90
 
 FC = gfortran
-FFLAGS = -fdefault-real-8 -O3	
+FFLAGS = -fdefault-real-8 -O3 
 #FFLAGS = -g -fdefault-real-8 -Wall -Wextra -Warray-temporaries -Wconversion -fbacktrace \
-#-ffree-line-length-0 -fcheck=all -ffpe-trap=zero,overflow,underflow -finit-real=nan
+#-ffree-line-length-0 -fcheck=all -ffpe-trap=zero,overflow,underflow -finit-real=nan -frecursive
 #FFLAGS = -g -Wall -Wextra -Warray-temporaries -Wconversion -fbacktrace \
 #-ffree-line-length-0 -fcheck=all -ffpe-trap=zero,overflow,underflow -finit-real=nan
 
