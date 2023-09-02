@@ -19,7 +19,7 @@ module params
  integer, parameter :: nhtot = 24             ! number of hours of model integration
  integer, parameter :: npdt = nhtot*3600/dt   ! number of model time steps
  integer, parameter :: nfreq = 24*3600/dt     ! hourly output archiving frequency
- character(len=3)   :: expid='002'            ! experiment identifier
+ character(len=3)   :: expid='003'            ! experiment identifier
  logical            :: lreaduv=.true.         ! logical to use u v at initial time
  logical            :: lsemimp=.true.         ! semi-implicit scheme
 
@@ -36,10 +36,12 @@ module model_vars
  real, dimension (nlon,nlat) :: psi, khi, u, v, ke ! diagnostic variables in physical space
  real, dimension (nlon,nlat) :: utr, vtr           ! u and v winds in geographical coordinates
  real, dimension (nlon,nlat) :: phis               ! surface geopotential
+ real, dimension (nlon,nlat) :: uvar, vvar         ! products for advection in physical space
  real                        :: phi_bar            ! mean value of geopotential (for SI scheme)
  
  complex, dimension(nlat,-mm:mm) :: vor_m, div_m, phi_m, qv_m, phis_m
  complex, dimension(nlat,-mm:mm) :: uvor_m, vvor_m
+ complex, dimension(nlat,-mm:mm) :: uvar_m, vvar_m
  complex, dimension(nlat,-mm:mm) :: psi_m, khi_m, u_m, v_m, ke_m  
  
  complex, dimension(mmax,3) :: vor_mn, div_mn, phi_mn, qv_mn  ! prognostic variables in spectral space (3 time steps)

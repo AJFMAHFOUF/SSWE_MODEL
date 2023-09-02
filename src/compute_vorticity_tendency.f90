@@ -6,7 +6,6 @@ subroutine compute_vorticity_tendency(tend_vor_mn)
  
  implicit none
  
- real, dimension(nlon,nlat)             :: uvor, vvor
  complex, dimension(mmax), intent(out)  :: tend_vor_mn
  real    :: d_legpol
  integer :: i1, i2, j1, j_index2, js, ms
@@ -15,15 +14,15 @@ subroutine compute_vorticity_tendency(tend_vor_mn)
  
  do j1 = 1,nlat
    do i1  = 1,nlon
-     uvor(i1,j1) = u(i1,j1)*(vor(i1,j1) + f(j1))
-     vvor(i1,j1) = v(i1,j1)*(vor(i1,j1) + f(j1))
+     uvar(i1,j1) = u(i1,j1)*(vor(i1,j1) + f(j1))
+     vvar(i1,j1) = v(i1,j1)*(vor(i1,j1) + f(j1))
    enddo
  enddo    
  
 ! Fourier space for non linear terms
 
- call fft_d(uvor,uvor_m) 
- call fft_d(vvor,vvor_m) 
+ call fft_d(uvar,uvor_m) 
+ call fft_d(vvar,vvor_m) 
 
 ! Compute tendencies in spectral space
 
