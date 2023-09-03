@@ -16,10 +16,10 @@ module params
  real, parameter    :: nu = 0.02, wk = 0.53   ! tunable parameters for 2*dt filter 
  real, parameter    :: kdiff = 1.00E16        ! Coefficient for horizontal diffusion
  real, parameter    :: dt = 1200.0            ! model time step
- integer, parameter :: nhtot = 120             ! number of hours of model integration
+ integer, parameter :: nhtot = 120            ! number of hours of model integration
  integer, parameter :: npdt = nhtot*3600/dt   ! number of model time steps
  integer, parameter :: nfreq = 24*3600/dt     ! hourly output archiving frequency
- character(len=3)   :: expid='t01'            ! experiment identifier
+ character(len=3)   :: expid='t02'            ! experiment identifier
  logical            :: lreaduv=.true.         ! logical to use u v at initial time
  logical            :: lsemimp=.true.         ! semi-implicit scheme
 

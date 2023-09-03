@@ -108,12 +108,12 @@ subroutine save_output(nstep)
      zlat = asin(x(j1))*180.0/pi
      zu = u(i1,j1)*zfac   ! real U wind
      zv = v(i1,j1)*zfac   ! real V wind
-     zphi = phi(i1,j1) + phis(i1,j1)
+     zphi = phi(i1,j1) + phis(i1,j1) + 40000.0
      write(20,*) zlon,zlat,vor(i1,j1),div(i1,j1),zphi,zu,zv,psi(i1,j1),khi(i1,j1),qv(i1,j1)
    enddo
    zu = u(1,j1)*zfac
    zv = v(1,j1)*zfac
-   zphi = phi(1,j1) 
+   zphi = phi(1,j1)  + phis(1,j1) + 40000.0
    write(20,*) 360.0,zlat,vor(1,j1),div(1,j1),zphi,zu,zv,psi(1,j1),khi(1,j1),qv(1,j1)
  enddo  
   

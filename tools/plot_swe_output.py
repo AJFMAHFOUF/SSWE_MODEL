@@ -2,12 +2,12 @@ from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
 import numpy as np
 nlats=64 ; nlons=129
-nstep='0000'
+nstep='0024'
 trunc='042'
-expid='t01'
+expid='t02'
 var='phi'
 plt.figure(figsize=(12,6))
-map = Basemap(projection='stere',width=18000000,height=18000000,lat_0=-90.0,lon_0=90.0,lat_ts=-60.0,resolution='l')
+map = Basemap(projection='stere',width=18000000,height=18000000,lat_0=90.0,lon_0=-90.0,lat_ts=60.0,resolution='l')
 #map = Basemap(projection='ortho',lat_0=90,lon_0=-90,resolution='l')           
 map.drawcoastlines(linewidth=0.25)
 map.drawcountries(linewidth=0.25)
@@ -41,5 +41,5 @@ else:
 	cs = map.contourf(x,y,field,10,cmap='seismic')
 plt.colorbar(shrink=0.5)
 plt.title(var+' 500 hpa '+nstep+'h - T'+trunc+' expid='+expid)
-plt.savefig('../plots/'+var+'_500_T'+trunc+'_step_'+nstep+'_expid_'+expid+'_SH.pdf')
+plt.savefig('../plots/'+var+'_500_T'+trunc+'_step_'+nstep+'_expid_'+expid+'_NH.pdf')
 plt.show()

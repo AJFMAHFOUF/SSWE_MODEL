@@ -52,14 +52,14 @@ subroutine init
      read(12,*) zlon, zlat, zfield(3)
      read(13,*) zlon, zlat, zfield(4)
      read(14,*) zlon, zlat, zfield(5)
-     phi_bar = phi_bar + zfield(3)*abs(sin(zlat*pi/180.))
-     zweight = zweight + abs(sin(zlat*pi/180.))
      if (i1 /= nlon+1) then
        vor(i1,j1) = zfield(1)
        div(i1,j1) = zfield(2)
        phi(i1,j1) = zfield(3)
        phis(i1,j1) = 0.0
-       phi(i1,j1) = phi(i1,j1) - phis(i1,j1) 
+       phi(i1,j1) = phi(i1,j1) - phis(i1,j1) - 40000.0 
+       phi_bar = phi_bar + phi(i1,j1)*abs(sin(zlat*pi/180.))
+       zweight = zweight + abs(sin(zlat*pi/180.))
        utr(i1,j1) = zfield(4)
        vtr(i1,j1) = zfield(5) 
        qv(i1,j1) = (cos(zlat*pi/180.))**4
