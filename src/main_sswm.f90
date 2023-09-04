@@ -40,8 +40,8 @@ program main_sswm
    call compute_vorticity_tendency(tend_vor_mn)
    call compute_divergence_tendency(nstep,tend_div_mn)
    call compute_geopotential_tendency(nstep,tend_phi_mn)
-   call compute_tracer_tendency(tend_qv_mn)
-   !tend_qv_mn(:) = (0.,0.)
+   !call compute_tracer_tendency(tend_qv_mn)
+   tend_qv_mn(:) = (0.,0.)
    
    if (nstep > 0) then
    
@@ -69,7 +69,7 @@ program main_sswm
 
      call numerical_diffusion(vor_mn(:,3),1)
      call numerical_diffusion(div_mn(:,3),1)
-     call numerical_diffusion(qv_mn(:,3),0)
+     !call numerical_diffusion(qv_mn(:,3),0)
 
 ! Include orography for geopotential filtering
 

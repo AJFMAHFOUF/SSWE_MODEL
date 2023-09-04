@@ -74,6 +74,7 @@ subroutine init
      zr = sqrt(zr2)
      phis(i1,j1) = zh0*g*(1.0 - zr/zr0)
      phi(i1,j1) = phi(i1,j1) - phis(i1,j1) 
+     qv(i1,j1) = 0.0
    enddo
  enddo
  
