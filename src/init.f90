@@ -9,7 +9,7 @@ subroutine init
  
  integer            :: i1, i2, j1
  real               :: zlon, zlat, zweight
- real, dimension(5) :: zfield
+ real               :: zfield, zu0, zh0, zr0, zr, zr2, zlonc, zlatc, zzz
  character(len=3)   :: tt
  character(len=2)   :: tt1
  
@@ -35,47 +35,6 @@ subroutine init
    enddo
  enddo 
 
-! Read initial physical fields (vorticity, divergence, geopotential, u and v winds)  
-     
- open (unit=10,file='../data_in/VOR_15012023_00_T'//tt//'gg.dat',status='old')
- open (unit=11,file='../data_in/DIV_15012023_00_T'//tt//'gg.dat',status='old') 
- open (unit=12,file='../data_in/PHI_15012023_00_T'//tt//'gg.dat',status='old')  
- open (unit=13,file='../data_in/U_15012023_00_T'//tt//'gg.dat',status='old')
- open (unit=14,file='../data_in/V_15012023_00_T'//tt//'gg.dat',status='old') 
-
- phi_bar = 0.0
- zweight = 0.0
- do j1 = 1,nlat  
-   do i1 = 1,nlon+1
-     read(10,*) zlon, zlat, zfield(1)
-     read(11,*) zlon, zlat, zfield(2)
-     read(12,*) zlon, zlat, zfield(3)
-     read(13,*) zlon, zlat, zfield(4)
-     read(14,*) zlon, zlat, zfield(5)
-     phi_bar = phi_bar + zfield(3)*abs(sin(zlat*pi/180.))
-     zweight = zweight + abs(sin(zlat*pi/180.))
-     if (i1 /= nlon+1) then
-       vor(i1,j1) = zfield(1)
-       div(i1,j1) = zfield(2)
-       phi(i1,j1) = zfield(3)
-       phis(i1,j1) = 0.0
-       phi(i1,j1) = phi(i1,j1) - phis(i1,j1) 
-       utr(i1,j1) = zfield(4)
-       vtr(i1,j1) = zfield(5) 
-       qv(i1,j1) = (cos(zlat*pi/180.))**4
-     endif
-   enddo
- enddo
- phi_bar = phi_bar/zweight
- 
- print *,'Initial fields have been read from input files for vor, div, phi, u and v',phi_bar
- 
- close(unit=10)
- close(unit=11)
- close(unit=12)
- close(unit=13)
- close(unit=14)
-
 ! Read Gaussian latitudes (sin) a and Gaussian weights w 
  
  open (20,file='../data_in/gaulat_legpol_T'//tt//'a.dat',status='old')
@@ -90,6 +49,35 @@ subroutine init
  print *,'Legendre polynomials have been read'    
        
  close(unit=20)
+
+! Define analytical initial fields for Case 5 from Williamson et al. (1992)  
+
+ phi_bar = 5500.0*g
+ zu0 = 2.0*pi*a/(12.0*86164.1)
+ zu0 = 0.5*zu0 ! necessary to recover published results
+ zh0 = 2000.0
+ zr0 = pi/9.0
+ zlonc = 0.5*pi
+ zlatc = pi/6.0
+ zzz = a*omega*zu0 + 0.5*zu0*zu0
+ 
+ do j1 = 1,nlat  
+   do i1 = 1,nlon
+     zlat = asin(real(x(j1)))*180.0/pi
+     zlon = 360./float(nlon)*(i1-1)
+     vor(i1,j1) = 2.0*zu0/a*sin(zlat*pi/180.)
+     div(i1,j1) = 0.0
+     phi(i1,j1) = 5960.0*g - zzz*(sin(zlat*pi/180.))**2 
+     utr(i1,j1) = zu0*cos(zlat*pi/180.)
+     vtr(i1,j1) = 0.0
+     zr2 = min(zr0*zr0, (zlon*pi/180. - zlonc)**2 + (zlat*pi/180. - zlatc)**2)
+     zr = sqrt(zr2)
+     phis(i1,j1) = zh0*g*(1.0 - zr/zr0)
+     phi(i1,j1) = phi(i1,j1) - phis(i1,j1) 
+   enddo
+ enddo
+ 
+ print *,'Initial fields have been defined for vor, div, phi, u and v',phi_bar
  
 ! Compute Coriolis parameter and transformed winds
  

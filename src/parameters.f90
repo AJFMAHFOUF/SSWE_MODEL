@@ -2,8 +2,8 @@ module params
 
  implicit none
 
- integer, parameter :: mm = 106               ! maximum wave number
- integer, parameter :: nlat = (3*mm+1)/2 + 1  ! number of latitudes
+ integer, parameter :: mm = 21                ! maximum wave number
+ integer, parameter :: nlat = (3*mm+1)/2      ! number of latitudes
  integer, parameter :: nlon = 2*nlat          ! number of longitudes
  integer, parameter :: mmax = (mm+1)*(mm+4)/2 ! number of stored wavenumbers
  integer, parameter :: nfft = 1               ! number of FFT to be done
@@ -14,13 +14,13 @@ module params
  real, parameter    :: g = 9.80616            ! Earth gravitational acceleration
  real, parameter    :: omega = 2.0*pi/86164.1 ! Earth angular speed (stellar day)
  real, parameter    :: nu = 0.02, wk = 0.53   ! tunable parameters for 2*dt filter 
- real, parameter    :: kdiff = 1.25E14        ! Coefficient for horizontal diffusion
- real, parameter    :: dt = 600.0             ! model time step
- integer, parameter :: nhtot = 24             ! number of hours of model integration
+ real, parameter    :: kdiff = 1.25E17        ! Coefficient for horizontal diffusion
+ real, parameter    :: dt = 3600.0            ! model time step
+ integer, parameter :: nhtot = 24*15          ! number of hours of model integration
  integer, parameter :: npdt = nhtot*3600/dt   ! number of model time steps
  integer, parameter :: nfreq = 24*3600/dt     ! hourly output archiving frequency
- character(len=3)   :: expid='003'            ! experiment identifier
- logical            :: lreaduv=.true.         ! logical to use u v at initial time
+ character(len=3)   :: expid='r01'            ! experiment identifier
+ logical            :: lreaduv=.false.        ! logical to use u v at initial time
  logical            :: lsemimp=.true.         ! semi-implicit scheme
 
  
