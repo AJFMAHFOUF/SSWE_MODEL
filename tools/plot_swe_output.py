@@ -1,10 +1,10 @@
 from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
 import numpy as np
-nlats=160 ; nlons=321
+nlats=32 ; nlons=65
 nstep='0024'
-trunc='106'
-expid='001'
+trunc='021'
+expid='h01'
 var='phi'
 plt.figure(figsize=(12,6))
 map = Basemap(projection='cyl',llcrnrlat=-90,urcrnrlat=90,\
@@ -33,8 +33,8 @@ lon2 = lon1.reshape((nlats,nlons))
 lat2 = lat1.reshape((nlats,nlons))
 x,y = map(lon2,lat2)
 if var == 'phi':
-	cs = map.contourf(x,y,field/9.81,levels=np.arange(4600,6200,100),cmap='jet')
-	#cs = map.contour(x,y,field/9.81,levels=np.arange(5000,6000,50),cmap='jet')
+	#cs = map.contourf(x,y,field/9.81,levels=np.arange(4600,6200,100),cmap='jet')
+	cs = map.contourf(x,y,field/9.81,15,cmap='jet')
 else:
 	cs = map.contourf(x,y,field,10,cmap='seismic')
 plt.colorbar(shrink=0.5)

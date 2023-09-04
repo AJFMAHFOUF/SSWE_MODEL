@@ -9,7 +9,8 @@ subroutine init
  
  integer            :: i1, i2, j1
  real               :: zlon, zlat, zweight
- real, dimension(5) :: zfield
+ real               :: zomega, zk, zr, zphi0, za, zb, zc 
+ real               :: zlatr, zlonr, zclatr, zslatr
  character(len=3)   :: tt
  character(len=2)   :: tt1
  
@@ -35,47 +36,6 @@ subroutine init
    enddo
  enddo 
 
-! Read initial physical fields (vorticity, divergence, geopotential, u and v winds)  
-     
- open (unit=10,file='../data_in/VOR_15012023_00_T'//tt//'gg.dat',status='old')
- open (unit=11,file='../data_in/DIV_15012023_00_T'//tt//'gg.dat',status='old') 
- open (unit=12,file='../data_in/PHI_15012023_00_T'//tt//'gg.dat',status='old')  
- open (unit=13,file='../data_in/U_15012023_00_T'//tt//'gg.dat',status='old')
- open (unit=14,file='../data_in/V_15012023_00_T'//tt//'gg.dat',status='old') 
-
- phi_bar = 0.0
- zweight = 0.0
- do j1 = 1,nlat  
-   do i1 = 1,nlon+1
-     read(10,*) zlon, zlat, zfield(1)
-     read(11,*) zlon, zlat, zfield(2)
-     read(12,*) zlon, zlat, zfield(3)
-     read(13,*) zlon, zlat, zfield(4)
-     read(14,*) zlon, zlat, zfield(5)
-     phi_bar = phi_bar + zfield(3)*abs(sin(zlat*pi/180.))
-     zweight = zweight + abs(sin(zlat*pi/180.))
-     if (i1 /= nlon+1) then
-       vor(i1,j1) = zfield(1)
-       div(i1,j1) = zfield(2)
-       phi(i1,j1) = zfield(3)
-       phis(i1,j1) = 0.0
-       phi(i1,j1) = phi(i1,j1) - phis(i1,j1) 
-       utr(i1,j1) = zfield(4)
-       vtr(i1,j1) = zfield(5) 
-       qv(i1,j1) = (cos(zlat*pi/180.))**4
-     endif
-   enddo
- enddo
- phi_bar = phi_bar/zweight
- 
- print *,'Initial fields have been read from input files for vor, div, phi, u and v',phi_bar
- 
- close(unit=10)
- close(unit=11)
- close(unit=12)
- close(unit=13)
- close(unit=14)
-
 ! Read Gaussian latitudes (sin) a and Gaussian weights w 
  
  open (20,file='../data_in/gaulat_legpol_T'//tt//'a.dat',status='old')
@@ -90,6 +50,54 @@ subroutine init
  print *,'Legendre polynomials have been read'    
        
  close(unit=20)
+
+ phi_bar = 0.0
+ zweight = 0.0
+!
+! Set-up parameters for Haurwitz wave 
+! 
+ zomega = 7.848E-6
+ zk = zomega
+ zr = 4.0
+ zphi0 = g*8.0E3
+! 
+! Set-up analytical form for initial conditions 
+!
+ do j1 = 1,nlat  
+   do i1 = 1,nlon
+     zlat = asin(real(x(j1)))*180.0/pi
+     zlon = 360.0/float(nlon)*(i1-1)
+     zlatr = zlat*pi/180.0
+     zlonr = zlon*pi/180.0    
+     zclatr = cos(zlatr)
+     zslatr = sin(zlatr)
+     
+     vor(i1,j1) = 2.0*zomega*zslatr - zk*zslatr*zclatr**zr*(zr*zr + 3.0*zr + 2.0)*cos(zr*zlonr)
+                
+     div(i1,j1) = 0.0
+     
+     za = 0.5*zomega*(2.0*omega + zomega)*zclatr**2 + &
+        & 0.25*zk*zk*zclatr**(2.0*zr)*((zr + 1.0)*zclatr**2 + & 
+        & (2.0*zr*zr - zr - 2.0) - 2.0*zr*zr/zclatr**2)   
+     zb = 2.0*(omega + zomega)*zk/((zr + 1.0)*(zr + 2.0))*zclatr**zr* &
+        & ((zr*zr + 2.0*zr + 2.0) - ((zr + 1.0)*zclatr)**2)         
+     zc = 0.25*zk*zk*zclatr**(2.0*zr)*((zr + 1.0)*zclatr**2 - (zr + 2.0))     
+     phi(i1,j1) = zphi0 + a*a*(za + zb*cos(zr*zlonr) + zc*cos(2.0*zr*zlonr))   
+     
+     utr(i1,j1) = a*zomega*zclatr + a*zk*zclatr**(zr - 1.0)* &
+                & (zr*zslatr**2 - zclatr**2)*cos(zr*zlonr)
+                
+     vtr(i1,j1) = -a*zk*zr*zclatr**(zr - 1.0)*zslatr*sin(zr*zlonr)  
+     
+     qv(i1,j1) = 0.0
+       
+     zweight = zweight + abs(zslatr)    
+     phi_bar = phi_bar + phi(i1,j1)*abs(zslatr)               
+   enddo
+ enddo
+ phi_bar = phi_bar/zweight
+ 
+ print *,'Initial fields have been initialized for vor, div, phi, u and v',phi_bar
  
 ! Compute Coriolis parameter and transformed winds
  
