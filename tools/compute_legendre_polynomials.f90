@@ -12,8 +12,8 @@ program compute_legendre_polynomials
 !   Jean-François Mahfouf (05/06/2023)
 !
  implicit none
- integer, parameter :: mm = 42 ! maximum wavenumber (truncation) 
- integer, parameter :: nn = (3*mm + 1)/2 + 1 ! number of latitudes to avoid aliasing for quadratic terms
+ integer, parameter :: mm = 85 ! maximum wavenumber (truncation) 
+ integer, parameter :: nn = (3*mm + 1)/2  ! number of latitudes to avoid aliasing for quadratic terms
  integer, parameter :: mmax = (mm+1)*(mm+4)/2 ! number of wavenumbers to be stored 
  real*8 :: x1, x2
  real*8 :: pi, z1, z2, z3, factrl

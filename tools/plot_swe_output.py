@@ -1,10 +1,10 @@
 from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
 import numpy as np
-nlats=32 ; nlons=65
+nlats=128 ; nlons=257
 nstep='0024'
-trunc='021'
-expid='h01'
+trunc='085'
+expid='hxx'
 var='phi'
 plt.figure(figsize=(12,6))
 map = Basemap(projection='cyl',llcrnrlat=-90,urcrnrlat=90,\
