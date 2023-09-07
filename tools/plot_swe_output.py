@@ -1,12 +1,12 @@
 from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
 import numpy as np
-nlats=128 ; nlons=257
-nstep='0024'
-trunc='085'
-expid='hxx'
+nlats=64 ; nlons=129
+nstep='0000'
+trunc='042'
+expid='h01'
 var='phi'
-plt.figure(figsize=(12,6))
+plt.figure(figsize=(12,12))
 map = Basemap(projection='cyl',llcrnrlat=-90,urcrnrlat=90,\
             llcrnrlon=0,urcrnrlon=360,resolution='c')
 map = Basemap(projection='ortho',lat_0=40,lon_0=-90,resolution='l')           
@@ -33,11 +33,12 @@ lon2 = lon1.reshape((nlats,nlons))
 lat2 = lat1.reshape((nlats,nlons))
 x,y = map(lon2,lat2)
 if var == 'phi':
-	#cs = map.contourf(x,y,field/9.81,levels=np.arange(4600,6200,100),cmap='jet')
+	#cs = map.contour(x,y,field/9.81,levels=np.arange(8100,10600,100),cmap='jet')
+	cs = map.contour(x,y,field/9.81,15,colors=['black'])
 	cs = map.contourf(x,y,field/9.81,15,cmap='jet')
 else:
 	cs = map.contourf(x,y,field,10,cmap='seismic')
 plt.colorbar(shrink=0.5)
 plt.title(var+' 500 hpa '+nstep+'h - T'+trunc+' expid='+expid)
-plt.savefig('../plots/'+var+'_500_T'+trunc+'_step_'+nstep+'_expid_'+expid+'.png')
+plt.savefig('../plots/'+var+'_500_T'+trunc+'_step_'+nstep+'_expid_'+expid+'.pdf')
 plt.show()
