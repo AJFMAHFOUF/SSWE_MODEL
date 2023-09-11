@@ -95,7 +95,6 @@ program main_sswm
      qv_mn(:,2) = qv_mn(:,2) + nu*wk*filter(:)
      qv_mn(:,3) = qv_mn(:,3) - nu*(1.0-wk)*filter(:)
   
-  
 ! Swap time steps    
    
      vor_mn(:,1) = vor_mn(:,2)
@@ -115,6 +114,10 @@ program main_sswm
      qv_mn(:,2) = qv_mn(:,1) + dt*tend_qv_mn(:)   
      
    endif     
+   
+   call legt_i(phi_m,phi_mn(:,2),0)
+   call fft_i(phi,phi_m)   
+   write (100,*) nstep,phi(138,70)
   
 ! Write fields in physical space - spectral transforms in the subroutine
    

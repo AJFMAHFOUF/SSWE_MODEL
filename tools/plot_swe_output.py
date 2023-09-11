@@ -1,14 +1,15 @@
 from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
 import numpy as np
-nlats=64 ; nlons=129
+nlats=96 ; nlons=193
 nstep='0024'
-trunc='042'
-expid='t02'
+trunc='063'
+expid='t10'
 var='phi'
-plt.figure(figsize=(12,6))
+#plt.figure(figsize=(12,6))
+plt.figure(figsize=(6,6))
 map = Basemap(projection='stere',width=18000000,height=18000000,lat_0=90.0,lon_0=-90.0,lat_ts=60.0,resolution='l')
-#map = Basemap(projection='ortho',lat_0=90,lon_0=-90,resolution='l')           
+#map = Basemap(projection='ortho',lat_0=60,lon_0=-90,resolution='l')           
 map.drawcoastlines(linewidth=0.25)
 map.drawcountries(linewidth=0.25)
 map.drawmeridians(np.arange(0,360,30))
@@ -34,12 +35,14 @@ lon2 = lon1.reshape((nlats,nlons))
 lat2 = lat1.reshape((nlats,nlons))
 x,y = map(lon2,lat2)
 if var == 'phi':
-	#cs = map.contourf(x,y,field/9.81,levels=np.arange(4600,6200,100),cmap='jet')
-	cs = map.contour(x,y,field/9.81,levels=np.arange(4650,5850,50),cmap='jet')
+	#cs = map.contour(x,y,field/9.81,20,cmap='jet')
+	#cs = map.contour(x,y,field/98.1,levels=np.arange(460,590,10),cmap='winter')
+	cs = map.contour(x,y,(field)/9.81+4450,levels=np.arange(9200,10300,50),cmap='winter')#colors='black')
 else:
 	#cs = map.contourf(x,y,field,levels=np.arange(0.0,1.1,0.1),cmap='jet')
 	cs = map.contourf(x,y,field,10,cmap='seismic')
 plt.colorbar(shrink=0.5)
 plt.title(var+' 500 hpa '+nstep+'h - T'+trunc+' expid='+expid)
-plt.savefig('../plots/'+var+'_500_T'+trunc+'_step_'+nstep+'_expid_'+expid+'_NH.pdf')
+plt.savefig('../plots/'+var+'_500_T'+trunc+'_step_'+nstep+'_expid_'+expid+'_NHa.pdf')
+#plt.savefig('../plots/'+var+'_500_T'+trunc+'_step_'+nstep+'_expid_'+expid+'.pdf')
 plt.show()

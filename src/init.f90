@@ -57,7 +57,7 @@ subroutine init
        div(i1,j1) = zfield(2)
        phi(i1,j1) = zfield(3)
        phis(i1,j1) = 0.0
-       phi(i1,j1) = phi(i1,j1) - phis(i1,j1) - 40000.0 
+       phi(i1,j1) = phi(i1,j1) - phis(i1,j1) !+ 4450.0*g
        phi_bar = phi_bar + phi(i1,j1)*abs(sin(zlat*pi/180.))
        zweight = zweight + abs(sin(zlat*pi/180.))
        utr(i1,j1) = zfield(4)
