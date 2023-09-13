@@ -6,7 +6,6 @@ function j_index2(mm,ms,ns)
  do i=0,abs(ms) - 1
    js = js + (mm + 2 - i)
  enddo  
- js = js + ns + 1 - abs(ms)  
- j_index2 = js
+ j_index2 = js + ns + 1 - abs(ms)
  return
 end function j_index2
