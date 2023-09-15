@@ -43,9 +43,6 @@ subroutine model(xin,xout,dt1,npdt_max,ldfi,loutput)
    call compute_geopotential_tendency(nstep,dt1,tend_phi_mn)
    !call compute_tracer_tendency(tend_qv_mn)
    tend_qv_mn(:) = (0.,0.)
-   !tend_vor_mn(:) = (0.,0.)
-   !tend_div_mn(:) = (0.,0.)
-   !tend_phi_mn(:) = (0.,0.)
    
    nstep1 = nstep + 1
    
@@ -76,7 +73,7 @@ subroutine model(xin,xout,dt1,npdt_max,ldfi,loutput)
      
 ! Apply horizontal diffusion in spectral space
 
-     if (.not.ldfi .and. dt1 > 0.0) then 
+     if (.not.ldfi) then 
        call numerical_diffusion(vor_mn(:,3),dt1,1)
        call numerical_diffusion(div_mn(:,3),dt1,1)
       !call numerical_diffusion(qv_mn(:,3),dt1,0)
