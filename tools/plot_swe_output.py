@@ -1,9 +1,9 @@
 from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
 import numpy as np
-nlats=160 ; nlons=321
-nstep='0024'
-trunc='106'
+nlats=64 ; nlons=129
+nstep='0000'
+trunc='042'
 expid='001'
 var='phi'
 plt.figure(figsize=(12,6))
@@ -34,7 +34,7 @@ lat2 = lat1.reshape((nlats,nlons))
 x,y = map(lon2,lat2)
 if var == 'phi':
 	cs = map.contourf(x,y,field/9.81,levels=np.arange(4600,6200,100),cmap='jet')
-	#cs = map.contour(x,y,field/9.81,levels=np.arange(5000,6000,50),cmap='jet')
+	#cs = map.contourf(x,y,field/9.81,15,cmap='jet')
 else:
 	cs = map.contourf(x,y,field,10,cmap='seismic')
 plt.colorbar(shrink=0.5)

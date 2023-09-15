@@ -1,4 +1,4 @@
-subroutine compute_geopotential_tendency(nstep,tend_phi_mn)
+subroutine compute_geopotential_tendency(nstep,dt1,tend_phi_mn)
 
  use params
  use model_vars
@@ -7,6 +7,7 @@ subroutine compute_geopotential_tendency(nstep,tend_phi_mn)
  implicit none
  
  integer, intent(in)                    :: nstep
+ real, intent(in)                       :: dt1
  complex, dimension(mmax), intent(out)  :: tend_phi_mn
  real    :: d_legpol
  integer :: i1, i2, j1, j_index2, ms, js
@@ -47,7 +48,7 @@ subroutine compute_geopotential_tendency(nstep,tend_phi_mn)
      ms = abs(i1)
      do i2 = ms,mm 
        js = j_index2(mm,ms,i2)        
-       tend_phi_mn(js) = phi_mn(js,1) + 2.0*dt*(tend_phi_mn(js) + phi_bar*(div_mn(js,2) - 0.5*div_mn(js,1))) 
+       tend_phi_mn(js) = phi_mn(js,1) + 2.0*dt1*(tend_phi_mn(js) + phi_bar*(div_mn(js,2) - 0.5*div_mn(js,1))) 
      enddo
    enddo  
  endif

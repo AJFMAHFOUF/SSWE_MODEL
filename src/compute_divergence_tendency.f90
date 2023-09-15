@@ -1,4 +1,4 @@
-subroutine compute_divergence_tendency(nstep,tend_div_mn)
+subroutine compute_divergence_tendency(nstep,dt1,tend_div_mn)
 
  use params
  use model_vars
@@ -7,6 +7,7 @@ subroutine compute_divergence_tendency(nstep,tend_div_mn)
  implicit none
  
  integer, intent(in)                    :: nstep
+ real, intent(in)                       :: dt1
  complex, dimension(mmax), intent(out)  :: tend_div_mn
  real    :: d_legpol, zlap
  integer :: i1, i2, j1, j_index2, js, ms
@@ -38,7 +39,7 @@ subroutine compute_divergence_tendency(nstep,tend_div_mn)
        js = j_index2(mm,ms,i2)
        zlap = i2*(i2 + 1.0)/(a*a)
        tend_div_mn(js) = tend_div_mn(js) - zlap*(ke_mn(js) + phi_mn(js,2))
-       tend_div_mn(js) = div_mn(js,1) + 2.0*dt*(tend_div_mn(js) + zlap*(ke_mn(js) + 0.5*phi_mn(js,1)))
+       tend_div_mn(js) = div_mn(js,1) + 2.0*dt1*(tend_div_mn(js) + zlap*(ke_mn(js) + 0.5*phi_mn(js,1)))
      enddo
    enddo  
  endif
