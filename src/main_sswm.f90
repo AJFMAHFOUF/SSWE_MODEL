@@ -11,6 +11,8 @@ program main_sswm
 !
 ! Use of FFT99 defined by Temperton (ECMWF) 
 !
+! Option in order to apply a DFI to the initial fields (Lynch and Huang, 1992)
+!
 !==================================================================================
  use params
  use model_vars
@@ -43,41 +45,49 @@ program main_sswm
  
  xin0 = xin
  
+ if (linit) then 
+ 
 ! DFI Forward integration  
  
- dt1 = dt
- ldfi = .true.
- npdt_max = 3*3600/dt
- loutput = .false.
+   dt1 = dt
+   ldfi = .true.
+   npdt_max = ndfi_win*1800/dt
+   loutput = .false.
  
- call model(xin,xout,dt1,npdt_max,ldfi,loutput)
+   call model(xin,xout,dt1,npdt_max,ldfi,loutput)
  
 ! Save output
 
- xout_filtered = xout
+   xout_filtered = xout
  
 ! DFI Backward integration
 
- dt1 = -dt
- xin = xin0 
+   dt1 = -dt
+   xin = xin0 
  
- call model(xin,xout,dt1,npdt_max,ldfi,loutput)
+   call model(xin,xout,dt1,npdt_max,ldfi,loutput)
  
 ! Save output
 
- xout_filtered%vormn = xout_filtered%vormn + xout%vormn
- xout_filtered%divmn = xout_filtered%divmn + xout%divmn 
- xout_filtered%phimn = xout_filtered%phimn + xout%phimn  
+   xout_filtered%vormn = xout_filtered%vormn + xout%vormn
+   xout_filtered%divmn = xout_filtered%divmn + xout%divmn 
+   xout_filtered%phimn = xout_filtered%phimn + xout%phimn  
+   
+   xout = xout_filtered
+   
+ else ! no DFI
  
-! Model integration with initialized fields
+   xout = xin0
+   
+ endif    
+ 
+! Model integration with raw or filtered initial fields
 
  dt1 = dt
  npdt_max = npdt + 1
  ldfi = .false.
- loutput = .true.
- 
- xin = xout_filtered
- 
+ loutput = .true. 
+    
  call model(xin,xout,dt1,npdt_max,ldfi,loutput)
  
  call cpu_time(time=t2)

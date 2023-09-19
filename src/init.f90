@@ -25,7 +25,7 @@ subroutine init
  
 ! Define date 
 
- cdate = '15012023' 
+ cdate = '21121978' 
  
 ! Initialisation prior FFT
 

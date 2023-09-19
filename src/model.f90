@@ -146,7 +146,7 @@ subroutine model(xin,xout,dt1,npdt_max,ldfi,loutput)
    if(.not.ldfi) then
      call legt_i(phi_m,phi_mn(:,2),0)
      call fft_i(phi,phi_m)  
-     write (101,*) nstep,phi(64,48) 
+     write (222,*) nstep,phi(138,70) 
    endif   
    
  enddo  
