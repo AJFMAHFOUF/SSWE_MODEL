@@ -53,6 +53,7 @@ module model_vars
    complex, dimension(mmax) :: vormn
    complex, dimension(mmax) :: divmn
    complex, dimension(mmax) :: phimn
+   complex, dimension(mmax) :: qvmn
  end type prog_var
  
 end module model_vars

@@ -40,6 +40,7 @@ program main_sswm
  xin%vormn = vor_mn(:,1)
  xin%divmn = div_mn(:,1) 
  xin%phimn = phi_mn(:,1)
+ xin%qvmn  = qv_mn(:,1)
  
 ! Save initial conditions 
  
@@ -72,6 +73,7 @@ program main_sswm
    xout_filtered%vormn = xout_filtered%vormn + xout%vormn
    xout_filtered%divmn = xout_filtered%divmn + xout%divmn 
    xout_filtered%phimn = xout_filtered%phimn + xout%phimn  
+   xout_filtered%qvmn  = xout_filtered%qvmn  + xout%qvmn
    
    xin = xout_filtered
    

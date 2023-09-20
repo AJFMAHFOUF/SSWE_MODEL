@@ -27,6 +27,9 @@ subroutine model(xin,xout,dt1,npdt_max,ldfi,loutput)
  phi_mn(:,1) = xin%phimn
  phi_mn(:,2) = xin%phimn
  phi_mn(:,3) = xin%phimn
+ qv_mn(:,1)  = xin%qvmn
+ qv_mn(:,2)  = xin%qvmn
+ qv_mn(:,3)  = xin%qvmn
  
  zsum = 0.0
 
@@ -41,8 +44,8 @@ subroutine model(xin,xout,dt1,npdt_max,ldfi,loutput)
    call compute_vorticity_tendency(tend_vor_mn)
    call compute_divergence_tendency(nstep,dt1,tend_div_mn)
    call compute_geopotential_tendency(nstep,dt1,tend_phi_mn)
-   !call compute_tracer_tendency(tend_qv_mn)
-   tend_qv_mn(:) = (0.,0.)
+   call compute_tracer_tendency(tend_qv_mn)
+   !tend_qv_mn(:) = (0.,0.)
    
    nstep1 = nstep + 1
    
@@ -76,7 +79,7 @@ subroutine model(xin,xout,dt1,npdt_max,ldfi,loutput)
      if (.not.ldfi) then 
        call numerical_diffusion(vor_mn(:,3),dt1,1)
        call numerical_diffusion(div_mn(:,3),dt1,1)
-      !call numerical_diffusion(qv_mn(:,3),dt1,0)
+       call numerical_diffusion(qv_mn(:,3),dt1,0)
 
 ! Include orography for geopotential filtering
 
@@ -119,6 +122,7 @@ subroutine model(xin,xout,dt1,npdt_max,ldfi,loutput)
        xout%vormn = xout%vormn + zwindow*vor_mn(:,2) 
        xout%divmn = xout%divmn + zwindow*div_mn(:,2) 
        xout%phimn = xout%phimn + zwindow*phi_mn(:,2)    
+       xout%qvmn  = xout%qvmn  + zwindow*qv_mn(:,2)
      endif
         
    else
@@ -132,6 +136,7 @@ subroutine model(xin,xout,dt1,npdt_max,ldfi,loutput)
        xout%vormn = 0.5/float(npdt_max)*vor_mn(:,1) + zwindow*vor_mn(:,2) 
        xout%divmn = 0.5/float(npdt_max)*div_mn(:,1) + zwindow*div_mn(:,2) 
        xout%phimn = 0.5/float(npdt_max)*phi_mn(:,1) + zwindow*phi_mn(:,2)    
+       xout%qvmn  = 0.5/float(npdt_max)*qv_mn(:,1)  + zwindow*qv_mn(:,2)    
      endif
        
    endif     
@@ -143,11 +148,11 @@ subroutine model(xin,xout,dt1,npdt_max,ldfi,loutput)
      call compute_ke_spectrum(nstep)
    endif  
    
-   if(.not.ldfi) then
-     call legt_i(phi_m,phi_mn(:,2),0)
-     call fft_i(phi,phi_m)  
-     write (222,*) nstep,phi(138,70) 
-   endif   
+   !if(.not.ldfi) then
+   !  call legt_i(phi_m,phi_mn(:,2),0)
+   !  call fft_i(phi,phi_m)  
+   !  write (222,*) nstep,phi(138,70) 
+   !endif   
    
  enddo  
  zsum2 = 2.0*zsum + 1.0/float(npdt_max)
@@ -158,10 +163,12 @@ subroutine model(xin,xout,dt1,npdt_max,ldfi,loutput)
     xout%vormn = vor_mn(:,2)
     xout%divmn = div_mn(:,2)
     xout%phimn = phi_mn(:,2)
+    xout%qvmn  = qv_mn(:,2)
   else
     xout%vormn = xout%vormn/zsum2
     xout%divmn = xout%divmn/zsum2
     xout%phimn = xout%phimn/zsum2  
+    xout%qvmn  = xout%qvmn/zsum2  
   endif
  
  return
