@@ -73,11 +73,11 @@ program main_sswm
    xout_filtered%divmn = xout_filtered%divmn + xout%divmn 
    xout_filtered%phimn = xout_filtered%phimn + xout%phimn  
    
-   xout = xout_filtered
+   xin = xout_filtered
    
  else ! no DFI
  
-   xout = xin0
+   xin = xin0
    
  endif    
  
