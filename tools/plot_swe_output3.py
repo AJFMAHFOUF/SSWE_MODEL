@@ -1,11 +1,12 @@
 from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt 
 import numpy as np
-nlats=96 ; nlons=193
-nstep='0000'
-trunc='063'
+nlats=48 ; nlons=97
+nstep='0120'
+trunc='031'
 expid='002'
 var='qv'
+var='uv'
 plt.figure(figsize=(12,6))
 map = Basemap(projection='cyl',llcrnrlat=-90,urcrnrlat=90,\
             llcrnrlon=0,urcrnrlon=360,resolution='c')
@@ -30,6 +31,9 @@ if var == 'u':
 	field = u.reshape((nlats,nlons))
 if var == 'v':
 	field = v.reshape((nlats,nlons))
+if var == 'uv':
+	field1 = u.reshape((nlats,nlons))
+	field2 = v.reshape((nlats,nlons))
 if var == 'qv':
 	field = qv.reshape((nlats,nlons))
 lon2 = lon1.reshape((nlats,nlons))
@@ -43,8 +47,10 @@ if var == 'phi':
 	#cs = map.contourf(x,y,(field)/9.81+4450,levels=np.arange(9150,10300,50),cmap='jet')
 	#cs = map.contourf(x,y,field/9.81,15,cmap='jet')
 else:
-	cs = map.contourf(x,y,field,10,cmap='jet')
-plt.colorbar(shrink=0.5)
-plt.title(var+' 500 hpa '+nstep+'h - T'+trunc+' expid='+expid)
-plt.savefig('../plots/'+var+'_500_T'+trunc+'_step_'+nstep+'_expid_'+expid+'_NH.pdf')
+	z = np.sqrt(field1*field1 + field2*field2)
+	#cs = map.contourf(x,y,field,10,cmap='jet')
+	map.quiver(x[::1,::1],y[::1,::1],field1[::1,::1],field2[::1,::1],z[::1,::1],width=0.002,headwidth=2,scale=2,scale_units='xy',cmap='jet')
+#plt.colorbar(shrink=0.5)
+#plt.title(var+' 500 hpa '+nstep+'h - T'+trunc+' expid='+expid)
+#plt.savefig('../plots/'+var+'_500_T'+trunc+'_step_'+nstep+'_expid_'+expid+'_NH.pdf')
 plt.show()

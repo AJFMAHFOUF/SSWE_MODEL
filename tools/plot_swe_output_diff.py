@@ -6,7 +6,7 @@ nstep='0000'
 trunc='063'
 expid1='001'
 expid2='002'
-var='qv'
+var='div'
 plt.figure(figsize=(12,6))
 map = Basemap(projection='cyl',llcrnrlat=-90,urcrnrlat=90,\
             llcrnrlon=0,urcrnrlon=360,resolution='c')
@@ -57,6 +57,7 @@ if var == 'phi':
 	#cs = map.contourf(x,y,field/9.81,15,cmap='jet')
 else:
 	cs = map.contourf(x,y,field2-field1,15,cmap='seismic')
+print ('mean value',np.mean(field2-field1))	
 plt.colorbar(shrink=0.5)
 plt.title(var+' 500 hpa '+nstep+'h - T'+trunc+' expid='+expid2+'-'+expid1)
 plt.savefig('../plots/'+var+'_500_T'+trunc+'_step_'+nstep+'_expid_'+expid2+'-'+expid1+'.png')
