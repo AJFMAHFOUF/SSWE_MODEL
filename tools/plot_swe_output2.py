@@ -4,13 +4,13 @@ import numpy as np
 nlats=96 ; nlons=193
 nstep='0120'
 trunc='063'
-expid='002'
+expid='001'
 var='phi'
 plt.figure(figsize=(6,6))
 map = Basemap(projection='cyl',llcrnrlat=-90,urcrnrlat=90,\
             llcrnrlon=0,urcrnrlon=360,resolution='c')
 map = Basemap(projection='ortho',lat_0=40,lon_0=-90,resolution='l')  
-map =Basemap(projection='stere',width=18000000,height=18000000,lat_0=90.0,lon_0=-90.0,lat_ts=60.0,resolution='l')
+map = Basemap(projection='stere',width=18000000,height=18000000,lat_0=90.0,lon_0=-90.0,lat_ts=60.0,resolution='l')
 map.drawcoastlines(linewidth=0.25)
 map.drawcountries(linewidth=0.25)
 map.drawmeridians(np.arange(0,360,30))
