@@ -21,6 +21,7 @@ module params
  integer, parameter :: nfreq = 1*3600/dt      ! hourly output archiving frequency
  integer, parameter :: ndfi_win = 12          ! time window in hours for digital filter initialisation
  character(len=3)   :: expid='002'            ! experiment identifier
+ character(len=8)   :: cdate='21121978'       ! DDMMYYY : date of initial conditions  
  logical            :: lreaduv=.true.         ! logical to use u v at initial time
  logical            :: lsemimp=.true.         ! semi-implicit scheme
  logical            :: linit=.true.           ! DFI initialisation 

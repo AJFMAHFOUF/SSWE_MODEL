@@ -12,7 +12,7 @@ subroutine init
  real, dimension(5) :: zfield
  character(len=3)   :: tt
  character(len=2)   :: tt1
- character(len=8)   :: cdate
+
  
 ! Define character for truncation
 
@@ -21,11 +21,7 @@ subroutine init
    tt = '0'//tt1
  else
    write(tt,'(i3)') mm
- endif    
- 
-! Define date 
-
- cdate = '21121978' 
+ endif     
  
 ! Initialisation prior FFT
 
