@@ -18,13 +18,11 @@ module params
  real, parameter    :: dt  = 3600.0           ! model time step
  integer, parameter :: nhtot = 120            ! number of hours of model integration
  integer, parameter :: npdt = nhtot*3600/dt   ! number of model time steps
- integer, parameter :: nfreq = 1*3600/dt      ! hourly output archiving frequency
+ integer, parameter :: nfreq = 24*3600/dt     ! hourly output archiving frequency
  integer, parameter :: ndfi_win = 12          ! time window in hours for digital filter initialisation
  character(len=3)   :: expid='002'            ! experiment identifier
- character(len=8)   :: cdate='21121978'       ! DDMMYYY : date of initial conditions  
+ character(len=8)   :: cdate='15012023'       ! DDMMYYY : date of initial conditions  
  logical            :: lreaduv=.true.         ! logical to use u v at initial time
- logical            :: lsemimp=.true.         ! semi-implicit scheme
- logical            :: linit=.true.           ! DFI initialisation 
 
  
 end module params 
@@ -35,26 +33,20 @@ module model_vars
  
  implicit none
  
- real, dimension (nlon,nlat) :: vor, div, phi, qv  ! prognostic variables in physical space
+ real, dimension (nlon,nlat) :: vor                ! prognostic variable  in physical space
  real, dimension (nlon,nlat) :: psi, khi, u, v, ke ! diagnostic variables in physical space
  real, dimension (nlon,nlat) :: utr, vtr           ! u and v winds in geographical coordinates
- real, dimension (nlon,nlat) :: phis               ! surface geopotential
  real, dimension (nlon,nlat) :: uvar, vvar         ! products for advection in physical space
- real                        :: phi_bar            ! mean value of geopotential (for SI scheme)
  
- complex, dimension(nlat,-mm:mm) :: vor_m, div_m, phi_m, qv_m, phis_m
+ complex, dimension(nlat,-mm:mm) :: vor_m
  complex, dimension(nlat,-mm:mm) :: uvor_m, vvor_m
- complex, dimension(nlat,-mm:mm) :: uvar_m, vvar_m
- complex, dimension(nlat,-mm:mm) :: psi_m, khi_m, u_m, v_m, ke_m  
+ complex, dimension(nlat,-mm:mm) :: psi_m, u_m, v_m, ke_m  
  
- complex, dimension(mmax,3) :: vor_mn, div_mn, phi_mn, qv_mn  ! prognostic variables in spectral space (3 time steps)
- complex, dimension(mmax)   :: psi_mn, khi_mn, u_mn, v_mn, ke_mn, phis_mn
+ complex, dimension(mmax,3) :: vor_mn              ! prognostic variable in spectral space (3 time steps)
+ complex, dimension(mmax)   :: psi_mn, u_mn, v_mn, ke_mn
  
  type prog_var
    complex, dimension(mmax) :: vormn
-   complex, dimension(mmax) :: divmn
-   complex, dimension(mmax) :: phimn
-   complex, dimension(mmax) :: qvmn
  end type prog_var
  
 end module model_vars

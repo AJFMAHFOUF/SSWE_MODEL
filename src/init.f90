@@ -8,8 +8,8 @@ subroutine init
  implicit none
  
  integer            :: i1, i2, j1
- real               :: zlon, zlat, zweight
- real, dimension(5) :: zfield
+ real               :: zlon, zlat 
+ real, dimension(3) :: zfield
  character(len=3)   :: tt
  character(len=2)   :: tt1
 
@@ -39,43 +39,27 @@ subroutine init
 ! Read initial physical fields (vorticity, divergence, geopotential, u and v winds)  
      
  open (unit=10,file='../data_in/VOR_'//cdate//'_00_T'//tt//'gg.dat',status='old')
- open (unit=11,file='../data_in/DIV_'//cdate//'_00_T'//tt//'gg.dat',status='old') 
- open (unit=12,file='../data_in/PHI_'//cdate//'_00_T'//tt//'gg.dat',status='old')  
- open (unit=13,file='../data_in/U_'//cdate//'_00_T'//tt//'gg.dat',status='old')
- open (unit=14,file='../data_in/V_'//cdate//'_00_T'//tt//'gg.dat',status='old') 
+ open (unit=11,file='../data_in/U_'//cdate//'_00_T'//tt//'gg.dat',status='old')
+ open (unit=12,file='../data_in/V_'//cdate//'_00_T'//tt//'gg.dat',status='old') 
 
- phi_bar = 0.0
- zweight = 0.0
  do j1 = 1,nlat  
    do i1 = 1,nlon+1
      read(10,*) zlon, zlat, zfield(1)
      read(11,*) zlon, zlat, zfield(2)
      read(12,*) zlon, zlat, zfield(3)
-     read(13,*) zlon, zlat, zfield(4)
-     read(14,*) zlon, zlat, zfield(5)
-     phi_bar = phi_bar + zfield(3)*abs(sin(zlat*pi/180.))
-     zweight = zweight + abs(sin(zlat*pi/180.))
      if (i1 /= nlon+1) then
        vor(i1,j1) = zfield(1)
-       div(i1,j1) = zfield(2)
-       phi(i1,j1) = zfield(3)
-       phis(i1,j1) = 0.0
-       phi(i1,j1) = phi(i1,j1) - phis(i1,j1) 
-       utr(i1,j1) = zfield(4)
-       vtr(i1,j1) = zfield(5) 
-       qv(i1,j1) = (cos(zlat*pi/180.))**4
+       utr(i1,j1) = zfield(2)
+       vtr(i1,j1) = zfield(3) 
      endif
    enddo
  enddo
- phi_bar = phi_bar/zweight
  
- print *,'Initial fields have been read from input files for vor, div, phi, u and v',phi_bar
+ print *,'Initial fields have been read from input files for vor, u and v '
  
  close(unit=10)
  close(unit=11)
  close(unit=12)
- close(unit=13)
- close(unit=14)
 
 ! Read Gaussian latitudes (sin) a and Gaussian weights w 
  
@@ -100,41 +84,15 @@ subroutine init
    v(:,j1) = vtr(:,j1)*a*sqrt(1.0 - x(j1)*x(j1))
  enddo
  
-! Spectral coefficients for orography
-
- call fft_d(phis,phis_m)
- call legt_d(phis_m,phis_mn) 
- 
 ! Spectral coefficients for vorticity (assumes vorticity field defined)
 
  call fft_d(vor,vor_m)    
  call legt_d(vor_m,vor_mn(:,2))
-
-! Spectral coefficients for divergence (assumes divergence field defined)
- 
- call fft_d(div,div_m) 
- call legt_d(div_m,div_mn(:,2))
-                                                                                                                                
-! Spectral coefficients for geopotential
- 
- call fft_d(phi,phi_m) 
- call legt_d(phi_m,phi_mn(:,2))
- 
-! Spectral coefficients for tracer
- 
- call fft_d(qv,qv_m) 
- call legt_d(qv_m,qv_mn(:,2)) 
-   
+                                                                                                                                   
 ! Fill other arrays
    
  vor_mn(:,1) = vor_mn(:,2)
  vor_mn(:,3) = vor_mn(:,2)   
- div_mn(:,1) = div_mn(:,2)
- div_mn(:,3) = div_mn(:,2)
- phi_mn(:,1) = phi_mn(:,2)
- phi_mn(:,3) = phi_mn(:,2)
- qv_mn(:,1)  = qv_mn(:,2)
- qv_mn(:,3)  = qv_mn(:,2)
  
  print *,'Exit from initialisation subroutine'      
       

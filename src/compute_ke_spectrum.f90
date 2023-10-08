@@ -51,16 +51,16 @@ subroutine compute_ke_spectrum(nstep)
    do i2 = ms,mm
      js = j_index2(mm,ms,i2)
      if (i1 == 0) then
-       ke_spectrum(i2) = ke_spectrum(i2) + 0.5*zcoef(i2)*(abs(vor_mn(js,2))**2 + abs(div_mn(js,2))**2)
+       ke_spectrum(i2) = ke_spectrum(i2) + 0.5*zcoef(i2)*abs(vor_mn(js,2))**2 
      else
-       ke_spectrum(i2) = ke_spectrum(i2) + zcoef(i2)*(abs(vor_mn(js,2))**2 + abs(div_mn(js,2))**2)
+       ke_spectrum(i2) = ke_spectrum(i2) + zcoef(i2)*abs(vor_mn(js,2))**2 
      endif 
    enddo   
  enddo
  
 ! Store results in file 
  
- open (unit=25,file='../data_out/SSWE_model_spectrum_T'//tt//'_step_'//ichst//'_expid_'//expid//'.dat',status='unknown')
+ open (unit=25,file='../data_out/BVE_model_spectrum_T'//tt//'_step_'//ichst//'_expid_'//expid//'.dat',status='unknown')
  
  do i1=1,mm
    write(25,*) i1,ke_spectrum(i1)

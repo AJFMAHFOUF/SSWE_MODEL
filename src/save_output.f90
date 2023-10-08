@@ -51,21 +51,6 @@ subroutine save_output(nstep)
  call legt_i(vor_m,vor_mn(:,its),0)
  call fft_i(vor,vor_m) 
   
-! Back to physical space - divergence  
-  
- call legt_i(div_m,div_mn(:,its),0)
- call fft_i(div,div_m)  
-  
-! Back to physical space - geopotential
-  
- call legt_i(phi_m,phi_mn(:,its),0)
- call fft_i(phi,phi_m)   
- 
-! Back to physical space - passive tracer
-  
- call legt_i(qv_m,qv_mn(:,its),0)
- call fft_i(qv,qv_m)     
-  
 ! Back to physical space - wind components
 
  call legt_i(u_m,u_mn,1)
@@ -77,29 +62,24 @@ subroutine save_output(nstep)
 ! Compute streamfunction and velocity potential  
 
  psi_mn(:) = (0.,0.)
- khi_mn(:) = (0.,0.) 
  do i1 = 0,mm
    ms=abs(i1)
    do i2 = ms,mm
      js = j_index2(mm,ms,i2)
      if (i2 > 0) then
        psi_mn(js) = (-a*a/(i2*(i2+1.0)))*vor_mn(js,its)
-       khi_mn(js) = (-a*a/(i2*(i2+1.0)))*div_mn(js,its)       
      endif  
    enddo
  enddo 
  
-! Back to physical space - khi and psi
+! Back to physical space -  psi
 
  call legt_i(psi_m,psi_mn,0)
  call fft_i(psi,psi_m) 
-  
- call legt_i(khi_m,khi_mn,0)
- call fft_i(khi,khi_m)  
  
 ! Write results in ASCII file for plotting purposes
   
- open (unit=20,file='../data_out/SSWE_model_T'//tt//'_step_'//ichst//'_expid_'//expid//'.dat',status='unknown')
+ open (unit=20,file='../data_out/BVE_model_T'//tt//'_step_'//ichst//'_expid_'//expid//'.dat',status='unknown')
   
  do j1=1,nlat 
    zfac = 1.0/(a*sqrt(1.0 - x(j1)*x(j1)))
@@ -108,13 +88,11 @@ subroutine save_output(nstep)
      zlat = asin(x(j1))*180.0/pi
      zu = u(i1,j1)*zfac   ! real U wind
      zv = v(i1,j1)*zfac   ! real V wind
-     zphi = phi(i1,j1) + phis(i1,j1)
-     write(20,*) zlon,zlat,vor(i1,j1),div(i1,j1),zphi,zu,zv,psi(i1,j1),khi(i1,j1),qv(i1,j1)
+     write(20,*) zlon,zlat,vor(i1,j1),zu,zv,psi(i1,j1)
    enddo
    zu = u(1,j1)*zfac
    zv = v(1,j1)*zfac
-   zphi = phi(1,j1) 
-   write(20,*) 360.0,zlat,vor(1,j1),div(1,j1),zphi,zu,zv,psi(1,j1),khi(1,j1),qv(1,j1)
+   write(20,*) 360.0,zlat,vor(1,j1),zu,zv,psi(1,j1)
  enddo  
   
  close (unit=20)  
