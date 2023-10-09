@@ -31,6 +31,8 @@ subroutine model(xin,xout,dt1,npdt_max,loutput)
  
    call compute_vorticity_tendency(tend_vor_mn)
    
+   call compute_balance_equation
+   
    if (nstep > 0) then
      
      vor_mn(:,3) = vor_mn(:,1) + 2.0*dt1*tend_vor_mn(:)

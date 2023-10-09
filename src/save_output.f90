@@ -14,7 +14,7 @@ subroutine save_output(nstep)
  character(len=3)    :: tt
  character(len=2)    :: tt1
  integer :: i1, j1, i2, ms, js, j_index2, ihour, its
- real :: zlon, zlat, zu, zv, zphi, zfac  
+ real :: zlon, zlat, zu, zv, zfac  
   
  ihour = nstep*dt/3600.0
  
@@ -50,6 +50,11 @@ subroutine save_output(nstep)
 
  call legt_i(vor_m,vor_mn(:,its),0)
  call fft_i(vor,vor_m) 
+ 
+! Back to physical space - geopotential
+
+ call legt_i(phi_m,phi_mn,0)
+ call fft_i(phi,phi_m) 
   
 ! Back to physical space - wind components
 
@@ -88,11 +93,11 @@ subroutine save_output(nstep)
      zlat = asin(x(j1))*180.0/pi
      zu = u(i1,j1)*zfac   ! real U wind
      zv = v(i1,j1)*zfac   ! real V wind
-     write(20,*) zlon,zlat,vor(i1,j1),zu,zv,psi(i1,j1)
+     write(20,*) zlon,zlat,vor(i1,j1),zu,zv,psi(i1,j1),phi(i1,j1)
    enddo
    zu = u(1,j1)*zfac
    zv = v(1,j1)*zfac
-   write(20,*) 360.0,zlat,vor(1,j1),zu,zv,psi(1,j1)
+   write(20,*) 360.0,zlat,vor(1,j1),zu,zv,psi(1,j1),phi(1,j1)
  enddo  
   
  close (unit=20)  

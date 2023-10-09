@@ -20,7 +20,7 @@ module params
  integer, parameter :: npdt = nhtot*3600/dt   ! number of model time steps
  integer, parameter :: nfreq = 24*3600/dt     ! hourly output archiving frequency
  integer, parameter :: ndfi_win = 12          ! time window in hours for digital filter initialisation
- character(len=3)   :: expid='002'            ! experiment identifier
+ character(len=3)   :: expid='003'            ! experiment identifier
  character(len=8)   :: cdate='15012023'       ! DDMMYYY : date of initial conditions  
  logical            :: lreaduv=.true.         ! logical to use u v at initial time
 
@@ -35,15 +35,18 @@ module model_vars
  
  real, dimension (nlon,nlat) :: vor                ! prognostic variable  in physical space
  real, dimension (nlon,nlat) :: psi, khi, u, v, ke ! diagnostic variables in physical space
+ real, dimension (nlon,nlat) :: phi                ! geopotential (diagnosed from balance equation)
  real, dimension (nlon,nlat) :: utr, vtr           ! u and v winds in geographical coordinates
  real, dimension (nlon,nlat) :: uvar, vvar         ! products for advection in physical space
  
  complex, dimension(nlat,-mm:mm) :: vor_m
  complex, dimension(nlat,-mm:mm) :: uvor_m, vvor_m
  complex, dimension(nlat,-mm:mm) :: psi_m, u_m, v_m, ke_m  
+ complex, dimension(nlat,-mm:mm) :: phi_m
  
  complex, dimension(mmax,3) :: vor_mn              ! prognostic variable in spectral space (3 time steps)
  complex, dimension(mmax)   :: psi_mn, u_mn, v_mn, ke_mn
+ complex, dimension(mmax)   :: phi_mn              ! geopotential (diagnosed)
  
  type prog_var
    complex, dimension(mmax) :: vormn
