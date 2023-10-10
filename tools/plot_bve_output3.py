@@ -2,14 +2,14 @@ from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt 
 import numpy as np
 nlats=48 ; nlons=97
-nstep='0120'
+nstep='0024'
 trunc='031'
-expid='003'
+expid='004'
 var='phi'
-plt.figure(figsize=(12,6))
+plt.figure(figsize=(10,10))
 map = Basemap(projection='cyl',llcrnrlat=-90,urcrnrlat=90,\
             llcrnrlon=0,urcrnrlon=360,resolution='c')
-#map = Basemap(projection='ortho',lat_0=40,lon_0=-90,resolution='l')  
+map = Basemap(projection='ortho',lat_0=40,lon_0=-90,resolution='l')  
 #map = Basemap(projection='stere',width=18000000,height=18000000,lat_0=90.0,lon_0=-90.0,lat_ts=60.0,resolution='l')
 map.drawcoastlines(linewidth=0.25)
 map.drawcountries(linewidth=0.25)
@@ -35,7 +35,7 @@ x,y = map(lon2,lat2)
 if var == 'phi':
 	#cs = map.contourf(x,y,field/9.81,levels=np.arange(4900,5200,25),cmap='jet')	
 	#cs = map.contour(x,y,field/98.1,levels=np.arange(460,590,10),colors='black')
-	#cs = map.contour(x,y,field,15,colors='black')
+	cs = map.contour(x,y,field,15,colors='black')
 	cs = map.contourf(x,y,field,15,cmap='jet')
 	#cs = map.contour(x,y,(field)/9.81+4450,levels=np.arange(9150,10300,50),colors='black')
 	#cs = map.contourf(x,y,(field)/9.81+4450,levels=np.arange(9150,10300,50),cmap='jet')

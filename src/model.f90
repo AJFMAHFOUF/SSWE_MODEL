@@ -31,8 +31,6 @@ subroutine model(xin,xout,dt1,npdt_max,loutput)
  
    call compute_vorticity_tendency(tend_vor_mn)
    
-   call compute_balance_equation
-   
    if (nstep > 0) then
      
      vor_mn(:,3) = vor_mn(:,1) + 2.0*dt1*tend_vor_mn(:)
@@ -61,6 +59,7 @@ subroutine model(xin,xout,dt1,npdt_max,loutput)
 ! Write fields in physical space - spectral transforms in the subroutine
    
    if (mod(nstep,nfreq) == 0 .and. loutput) then
+     call compute_balance_equation
      call save_output(nstep)
      call compute_ke_spectrum(nstep)
    endif  

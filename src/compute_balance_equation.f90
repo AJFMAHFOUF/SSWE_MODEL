@@ -32,23 +32,23 @@ subroutine compute_balance_equation
    ms=abs(i1)
    do i2 = ms,mm
      js = j_index2(mm,ms,i2)
-     if (ms+1 <= mm) then
-       jsp = j_index2(mm,ms+1,i2)
-       vor1 = vor_mn(jsp,2)
-     else
-       vor1 = (0.,0.)
-     endif
-     if (ms-1 >= 0) then    
-       jsm = j_index2(mm,ms-1,i2)
-       vor2 = vor_mn(jsm,2)
-     else
-       vor2 = (0.,0.)
-     endif
+     !if (ms+1 <= mm) then
+     !  jsp = j_index2(mm,ms+1,i2)
+     !  vor1 = vor_mn(jsp,2)
+     !else
+     !  vor1 = (0.,0.)
+     !endif
+     !if (ms-1 >= 0) then    
+     !  jsm = j_index2(mm,ms-1,i2)
+     !  vor2 = vor_mn(jsm,2)
+     !else
+     !  vor2 = (0.,0.)
+     !endif
      if (i2 > 0) then
-       beta1 = -2.0*omega*a*a/(i2*(i2+1.0))*(1.0 - 1.0/(i2+1.0))*sqrt((i2+1.0+ms)*(i2+1.0-ms)/((2.*i2+3.)*(2.*i2+1.)))  
-       beta2 = -2.0*omega*a*a/(i2*(i2+1.0))*(1.0 + 1.0/i2)*sqrt((i2+ms)*(i2-ms)/((2.*i2+1.)*(2.*i2-1.)))
-       phi_mn(js) = beta1*vor1 + beta2*vor2
-       !phi_mn(js) = (-a*a/(i2*(i2+1.0)))*linbal_mn(js)     
+       !beta1 = -2.0*omega*a*a/(i2*(i2+1.0))*(1.0 - 1.0/(i2+1.0))*sqrt((i2+1.0+ms)*(i2+1.0-ms)/((2.*i2+3.)*(2.*i2+1.)))  
+       !beta2 = -2.0*omega*a*a/(i2*(i2+1.0))*(1.0 + 1.0/i2)*sqrt((i2+ms)*(i2-ms)/((2.*i2+1.)*(2.*i2-1.)))
+       !phi_mn(js) = beta1*vor1 + beta2*vor2
+       phi_mn(js) = (-a*a/(i2*(i2+1.0)))*linbal_mn(js)     
      endif  
    enddo
  enddo  
