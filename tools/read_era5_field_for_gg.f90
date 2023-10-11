@@ -1,7 +1,7 @@
 program read_era5_for_gg
  integer, parameter :: nx1=1440, ny1=721 ! regular 0.25°x0.25° lat/lon grid
- !integer, parameter :: nx2=96,    ny2=48  ! Gaussian grid for T31 triagular truncation
- integer, parameter :: nx2=128,   ny2=64  ! Gaussian grid for T42 triagular truncation
+ integer, parameter :: nx2=96,    ny2=48  ! Gaussian grid for T31 triagular truncation
+ !integer, parameter :: nx2=128,   ny2=64  ! Gaussian grid for T42 triagular truncation
  !integer, parameter :: nx2=192,   ny2=96  ! Gaussian grid for T63 triagular truncation
  !integer, parameter :: nx2=160,   ny2=80  ! Gaussian grid for T53 triagular truncation
  !integer, parameter :: nx2=320,   ny2=160 ! Gaussian grid for T106 triagular truncation
@@ -16,7 +16,7 @@ program read_era5_for_gg
  
  date='15012023'
  
- trunc='042'
+ trunc='031'
 !
 ! Open input files - ERA5 regular lat/lon grid 0.25°x0.25° resolution
 !  

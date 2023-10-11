@@ -2,11 +2,11 @@ from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt 
 import numpy as np
 nlats=48 ; nlons=97
-nstep='0000'
+nstep='0120'
 trunc='031'
 expid='002'
-var='vor'
-plt.figure(figsize=(12,6))
+var='phi'
+plt.figure(figsize=(10,10))
 map = Basemap(projection='cyl',llcrnrlat=-90,urcrnrlat=90,\
             llcrnrlon=0,urcrnrlon=360,resolution='c')
 map = Basemap(projection='ortho',lat_0=40,lon_0=-90,resolution='l')  
@@ -38,11 +38,12 @@ if var == 'qv':
 lon2 = lon1.reshape((nlats,nlons))
 lat2 = lat1.reshape((nlats,nlons))
 x,y = map(lon2,lat2)
-if var == 'vor':
+if var == 'phi':
 	#cs = map.contourf(x,y,field/9.81,levels=np.arange(4600,6200,100),cmap='jet')	
 	#cs = map.contour(x,y,field/98.1,levels=np.arange(460,590,10),colors='black')
 	#cs = map.contour(x,y,field/9.81,np.arange(4700,6100,100),colors='black')
-	cs = map.contourf(x,y,field,15,cmap='seismic')
+	cs = map.contour(x,y,field,15,colors='black')
+	cs = map.contourf(x,y,field,15,cmap='jet')
 	#cs = map.contour(x,y,(field)/9.81+4450,levels=np.arange(9150,10300,50),colors='black')
 	#cs = map.contourf(x,y,(field)/9.81+4450,levels=np.arange(9150,10300,50),cmap='jet')
 	#cs = map.contourf(x,y,field/9.81,15,cmap='jet')
@@ -52,5 +53,5 @@ else:
 	map.quiver(x[::1,::1],y[::1,::1],field1[::1,::1],field2[::1,::1],z[::1,::1],width=0.002,headwidth=2,scale=2,scale_units='xy',cmap='jet')
 plt.colorbar(shrink=0.5)
 plt.title('SWE '+var+' 500 hpa '+nstep+'h - T'+trunc+' expid='+expid)
-plt.savefig('../plots/SWE_'+var+'_500_T'+trunc+'_step_'+nstep+'_expid_'+expid+'_NH.pdf')
+plt.savefig('../plots/SWE_'+var+'_500_T'+trunc+'_step_'+nstep+'_expid_'+expid+'.pdf')
 plt.show()
