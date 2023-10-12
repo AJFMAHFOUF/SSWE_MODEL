@@ -91,8 +91,8 @@ subroutine init
      
      qv(i1,j1) = 0.0
        
-     zweight = zweight + abs(zslatr)    
-     phi_bar = phi_bar + phi(i1,j1)*abs(zslatr)               
+     zweight = zweight + abs(zclatr)    
+     phi_bar = phi_bar + phi(i1,j1)*abs(zclatr)               
    enddo
  enddo
  phi_bar = phi_bar/zweight
