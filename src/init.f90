@@ -53,8 +53,8 @@ subroutine init
      read(12,*) zlon, zlat, zfield(3)
      read(13,*) zlon, zlat, zfield(4)
      read(14,*) zlon, zlat, zfield(5)
-     phi_bar = phi_bar + zfield(3)*abs(sin(zlat*pi/180.))
-     zweight = zweight + abs(sin(zlat*pi/180.))
+     phi_bar = phi_bar + zfield(3)*abs(cos(zlat*pi/180.))
+     zweight = zweight + abs(cos(zlat*pi/180.))
      if (i1 /= nlon+1) then
        vor(i1,j1) = zfield(1)
        div(i1,j1) = zfield(2)

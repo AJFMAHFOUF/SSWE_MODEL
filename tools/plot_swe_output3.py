@@ -4,7 +4,7 @@ import numpy as np
 nlats=48 ; nlons=97
 nstep='0000'
 trunc='031'
-expid='002'
+expid='001'
 var='phi'
 plt.figure(figsize=(10,10))
 map = Basemap(projection='cyl',llcrnrlat=-90,urcrnrlat=90,\
@@ -54,4 +54,4 @@ else:
 plt.colorbar(shrink=0.5)
 plt.title('SWE '+var+' 500 hpa '+nstep+'h - T'+trunc+' expid='+expid)
 plt.savefig('../plots/SWE_'+var+'_500_T'+trunc+'_step_'+nstep+'_expid_'+expid+'.pdf')
-plt.show()
+#plt.show()

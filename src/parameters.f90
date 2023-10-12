@@ -18,13 +18,13 @@ module params
  real, parameter    :: dt  = 3600.0           ! model time step
  integer, parameter :: nhtot = 120            ! number of hours of model integration
  integer, parameter :: npdt = nhtot*3600/dt   ! number of model time steps
- integer, parameter :: nfreq = 1*3600/dt      ! hourly output archiving frequency
+ integer, parameter :: nfreq = 24*3600/dt     ! hourly output archiving frequency
  integer, parameter :: ndfi_win = 12          ! time window in hours for digital filter initialisation
- character(len=3)   :: expid='002'            ! experiment identifier
- character(len=8)   :: cdate='21121978'       ! DDMMYYY : date of initial conditions  
+ character(len=3)   :: expid='001'            ! experiment identifier
+ character(len=8)   :: cdate='15012023'       ! DDMMYYY : date of initial conditions  
  logical            :: lreaduv=.true.         ! logical to use u v at initial time
  logical            :: lsemimp=.true.         ! semi-implicit scheme
- logical            :: linit=.true.           ! DFI initialisation 
+ logical            :: linit=.false.          ! DFI initialisation 
 
  
 end module params 
