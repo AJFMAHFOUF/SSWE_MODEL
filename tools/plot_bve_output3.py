@@ -2,9 +2,9 @@ from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt 
 import numpy as np
 nlats=48 ; nlons=97
-nstep='0024'
+nstep='0120'
 trunc='031'
-expid='004'
+expid='001'
 var='phi'
 plt.figure(figsize=(10,10))
 map = Basemap(projection='cyl',llcrnrlat=-90,urcrnrlat=90,\
@@ -35,8 +35,8 @@ x,y = map(lon2,lat2)
 if var == 'phi':
 	#cs = map.contourf(x,y,field/9.81,levels=np.arange(4900,5200,25),cmap='jet')	
 	#cs = map.contour(x,y,field/98.1,levels=np.arange(460,590,10),colors='black')
-	cs = map.contour(x,y,field,15,colors='black')
-	cs = map.contourf(x,y,field,15,cmap='jet')
+	cs = map.contour(x,y,field/9.81,levels=np.arange(4800,6100,100),colors='black')
+	cs = map.contourf(x,y,field/9.81,levels=np.arange(4800,6100,100),cmap='jet')
 	#cs = map.contour(x,y,(field)/9.81+4450,levels=np.arange(9150,10300,50),colors='black')
 	#cs = map.contourf(x,y,(field)/9.81+4450,levels=np.arange(9150,10300,50),cmap='jet')
 	#cs = map.contourf(x,y,field/9.81,15,cmap='jet')

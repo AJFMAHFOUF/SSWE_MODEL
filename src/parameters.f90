@@ -20,7 +20,7 @@ module params
  integer, parameter :: npdt = nhtot*3600/dt   ! number of model time steps
  integer, parameter :: nfreq = 24*3600/dt     ! hourly output archiving frequency
  integer, parameter :: ndfi_win = 12          ! time window in hours for digital filter initialisation
- character(len=3)   :: expid='004'            ! experiment identifier
+ character(len=3)   :: expid='001'            ! experiment identifier
  character(len=8)   :: cdate='15012023'       ! DDMMYYY : date of initial conditions  
  logical            :: lreaduv=.true.         ! logical to use u v at initial time
 
