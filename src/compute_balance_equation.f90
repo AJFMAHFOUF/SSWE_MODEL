@@ -27,7 +27,7 @@ subroutine compute_balance_equation
  
 ! Solve linear balance equation to obtain the geopotential - Derber and Bouttier (1999)
 
- phi_mn(1) = (55322.,0.)  ! mean geopotential
+ phi_mn(1) = cmplx(phibar)  ! mean geopotential
  do i1 = 0,mm
    ms=abs(i1)
    do i2 = ms,mm

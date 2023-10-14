@@ -8,8 +8,8 @@ subroutine init
  implicit none
  
  integer            :: i1, i2, j1
- real               :: zlon, zlat 
- real, dimension(3) :: zfield
+ real               :: zlon, zlat, zzz, zweight 
+ real, dimension(4) :: zfield
  character(len=3)   :: tt
  character(len=2)   :: tt1
 
@@ -41,25 +41,38 @@ subroutine init
  open (unit=10,file='../data_in/VOR_'//cdate//'_00_T'//tt//'gg.dat',status='old')
  open (unit=11,file='../data_in/U_'//cdate//'_00_T'//tt//'gg.dat',status='old')
  open (unit=12,file='../data_in/V_'//cdate//'_00_T'//tt//'gg.dat',status='old') 
+ open (unit=13,file='../data_in/PHI_'//cdate//'_00_T'//tt//'gg.dat',status='old') 
 
+ phibar = 0.0
+ zweight = 0.0
  do j1 = 1,nlat  
    do i1 = 1,nlon+1
      read(10,*) zlon, zlat, zfield(1)
      read(11,*) zlon, zlat, zfield(2)
      read(12,*) zlon, zlat, zfield(3)
+     read(13,*) zlon, zlat, zfield(4)
      if (i1 /= nlon+1) then
+       zzz=cos(pi*zlat/180.)
        vor(i1,j1) = zfield(1)
        utr(i1,j1) = zfield(2)
        vtr(i1,j1) = zfield(3) 
+       phibar = phibar + zfield(4)*cos(pi/180.*zlat)
+       zweight = zweight + cos(pi/180.*zlat)
+       if (.not.l_real_ic) then
+         utr(i1,j1) = 25.0*zzz - 30.0*zzz**3 + 300.0*(1.0-zzz**2)*zzz**6
+         vtr(i1,j1) = 0.0
+       endif
      endif
    enddo
  enddo
+ phibar = phibar/zweight
  
- print *,'Initial fields have been read from input files for vor, u and v '
+ print *,'Initial fields have been read from input files for vor, u and v ',phibar
  
  close(unit=10)
  close(unit=11)
  close(unit=12)
+ close(unit=13)
 
 ! Read Gaussian latitudes (sin) a and Gaussian weights w 
  

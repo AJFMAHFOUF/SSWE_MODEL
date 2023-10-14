@@ -19,10 +19,10 @@ module params
  integer, parameter :: nhtot = 120            ! number of hours of model integration
  integer, parameter :: npdt = nhtot*3600/dt   ! number of model time steps
  integer, parameter :: nfreq = 24*3600/dt     ! hourly output archiving frequency
- integer, parameter :: ndfi_win = 12          ! time window in hours for digital filter initialisation
  character(len=3)   :: expid='001'            ! experiment identifier
  character(len=8)   :: cdate='15012023'       ! DDMMYYY : date of initial conditions  
  logical            :: lreaduv=.true.         ! logical to use u v at initial time
+ logical            :: l_real_ic=.true.       ! logical to consider true or analytical initial conditions
 
  
 end module params 
@@ -38,6 +38,7 @@ module model_vars
  real, dimension (nlon,nlat) :: phi                ! geopotential (diagnosed from balance equation)
  real, dimension (nlon,nlat) :: utr, vtr           ! u and v winds in geographical coordinates
  real, dimension (nlon,nlat) :: uvar, vvar         ! products for advection in physical space
+ real                        :: phibar             ! mean value of geopotential to solve linear balance equation
  
  complex, dimension(nlat,-mm:mm) :: vor_m
  complex, dimension(nlat,-mm:mm) :: uvor_m, vvor_m
