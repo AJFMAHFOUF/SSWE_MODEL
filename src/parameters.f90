@@ -15,7 +15,7 @@ module params
  real, parameter    :: omega = 2.0*pi/86164.1 ! Earth angular speed (stellar day)
  real, parameter    :: nu = 0.02, wk = 0.53   ! tunable parameters for 2*dt filter 
  real, parameter    :: kdiff = 5.00E16        ! Coefficient for horizontal diffusion
- real, parameter    :: dt  = 3600.0           ! model time step
+ real, parameter    :: dt  = 360.0            ! model time step
  integer, parameter :: nhtot = 120            ! number of hours of model integration
  integer, parameter :: npdt = nhtot*3600/dt   ! number of model time steps
  integer, parameter :: nfreq = 24*3600/dt     ! hourly output archiving frequency
