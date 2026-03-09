@@ -19,7 +19,7 @@ module params
  integer, parameter :: nhtot = 120            ! number of hours of model integration
  integer, parameter :: npdt = nhtot*3600/dt   ! number of model time steps
  integer, parameter :: nfreq = 24*3600/dt     ! hourly output archiving frequency
- character(len=3)   :: expid='001'            ! experiment identifier
+ character(len=3)   :: expid='002'            ! experiment identifier
  character(len=8)   :: cdate='15012023'       ! DDMMYYY : date of initial conditions  
  logical            :: lreaduv=.true.         ! logical to use u v at initial time
  logical            :: l_real_ic=.true.       ! logical to consider true or analytical initial conditions
